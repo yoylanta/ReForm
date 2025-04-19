@@ -1,0 +1,40 @@
+@model int
+
+<!-- Modal -->
+<div class="modal micromodal-slide" id="add-question-modal" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1">
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <header class="modal__header">
+                <h2 id="modal-title">Add New Question</h2>
+                <button class="modal__close" aria-label="Close modal"
+                        onclick="MicroModal.close('add-question-modal')"></button>
+            </header>
+            <main class="modal__content">
+                <label>Question Text:</label>
+                <input type="text" id="question-text" class="form-control"/>
+
+                <label>Question Type:</label>
+                <select id="question-type" class="form-control" onchange="toggleOptionsInput()">
+                    <option value="SingleChoice">SingleChoice</option>
+                    <option value="MultipleChoice">MultipleChoice</option>
+                    <option value="Text">Text</option>
+                    <option value="Rating">Rating</option>
+                    <option value="Date">Date</option>
+                </select>
+
+                <label>
+                    <input type="checkbox" id="is-mandatory"/> Is Mandatory
+                </label>
+
+                <div id="options-container" style="display:none;">
+                    <label>Answer Options (comma-separated):</label>
+                    <textarea id="question-options" class="form-control"></textarea>
+                </div>
+            </main>
+            <footer class="modal__footer">
+                <button class="btn btn-success" onclick="saveQuestion(@Model)">Save</button>
+                <button class="btn btn-secondary" onclick="MicroModal.close('add-question-modal')">Cancel</button>
+            </footer>
+        </div>
+    </div>
+</div>

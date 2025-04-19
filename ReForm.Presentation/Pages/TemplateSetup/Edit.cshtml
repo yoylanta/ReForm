@@ -1,0 +1,31 @@
+@page
+@model ReForm.Presentation.Pages.TemplateSetup.EditModel
+@using ReForm.Core.Models.Enums
+@{
+    ViewData["Title"] = "Edit Template";
+}
+
+<script src="/lib/micromodal/dist/micromodal.min.js"></script>
+<script src="/js/edit.js"></script>
+<link rel="stylesheet" href="/css/edit.css"/>
+
+<h1>Edit Template: @Model.Template.Title</h1>
+
+<hr/>
+<h2>Questions</h2>
+
+<ul id="questions-list">
+    @foreach (var q in Model.Template.Questions)
+    {
+        <li>
+            <strong>@q.Text</strong> (@q.Type) - @(q.IsMandatory ? "Required" : "Optional")
+        </li>
+    }
+</ul>
+
+<button class="btn btn-primary" onclick="MicroModal.show('add-question-modal')">
+    Add New Question
+</button>
+
+<!-- Include modal as partial -->
+@await Html.PartialAsync("_AddQuestionModal", Model.Template.Id)

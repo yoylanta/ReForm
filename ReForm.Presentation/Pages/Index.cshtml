@@ -1,10 +1,27 @@
-﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
+@page
+@model ReForm.Presentation.Pages.Index
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    ViewData["Title"] = "My Templates";
+}
+@await Html.PartialAsync("_CreateTemplateModal")
+<link rel="stylesheet" href="~/css/homepage.css"/>
+<script src="~/lib/micromodal/dist/micromodal.min.js"></script>
+<script src="~/js/homepage.js" defer></script>
+
+<div class="template-container">
+    <div class="header">
+        <h1>My Templates</h1>
+        <button class="btn btn-outline-primary me-2" onclick="createNewTemplate()">Create New Template</button>
+    </div>
+
+    <div class="template-grid">
+        @foreach (var form in Model.MyTemplates)
+        {
+            <div class="template-card">
+                <h3>@form.Title</h3>
+                <p>ID: @form.Id</p>
+            </div>
+        }
+    </div>
 </div>

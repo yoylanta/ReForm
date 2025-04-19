@@ -1,0 +1,713 @@
+2025-03-23 00:02:58.625 +03:00 [INF] Application is shutting down...
+2025-03-23 00:03:50.443 +03:00 [INF] Executed DbCommand (217ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:03:50.632 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:03:50.712 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:03:50.783 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:03:50.789 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:03:50.826 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-03-23 00:03:51.028 +03:00 [INF] User profile is available. Using 'C:\Users\lexas\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-23 00:03:51.409 +03:00 [INF] Now listening on: http://localhost:5101
+2025-03-23 00:03:51.415 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-23 00:03:51.418 +03:00 [INF] Hosting environment: Development
+2025-03-23 00:03:51.419 +03:00 [INF] Content root path: D:\RiderProjects\ReForm\ReForm.Presentation
+2025-03-23 00:04:24.798 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/ - null null
+2025-03-23 00:04:24.922 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-03-23 00:04:24.928 +03:00 [INF] Executing endpoint '/Index'
+2025-03-23 00:04:24.979 +03:00 [INF] Route matched with {page = "/Index", action = "", controller = ""}. Executing page /Index
+2025-03-23 00:04:25.050 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:04:25.943 +03:00 [INF] Executed DbCommand (71ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" = @__email_0
+LIMIT 1
+2025-03-23 00:04:26.200 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+2025-03-23 00:04:26.213 +03:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-03-23 00:04:26.225 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:04:26.227 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:04:26.340 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" = @__email_0
+LIMIT 1
+2025-03-23 00:04:26.500 +03:00 [INF] Executed page /Index in 1508.7705ms
+2025-03-23 00:04:26.508 +03:00 [INF] Executed endpoint '/Index'
+2025-03-23 00:04:26.539 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/ - 200 null text/html; charset=utf-8 1744.1627ms
+2025-03-23 00:04:39.649 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Logout - null null
+2025-03-23 00:04:39.669 +03:00 [INF] Executing endpoint '/Account/Logout'
+2025-03-23 00:04:39.677 +03:00 [INF] Route matched with {page = "/Account/Logout", action = "", controller = ""}. Executing page /Account/Logout
+2025-03-23 00:04:39.680 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.Logout.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:04:48.133 +03:00 [INF] AuthenticationScheme: Identity.Application signed out.
+2025-03-23 00:04:48.139 +03:00 [INF] AuthenticationScheme: Identity.External signed out.
+2025-03-23 00:04:48.141 +03:00 [INF] AuthenticationScheme: Identity.TwoFactorUserId signed out.
+2025-03-23 00:04:48.148 +03:00 [INF] Executed handler method OnGetAsync, returned result Microsoft.AspNetCore.Mvc.RedirectToPageResult.
+2025-03-23 00:04:48.152 +03:00 [INF] Executing RedirectToPageResult, redirecting to /Account/Login.
+2025-03-23 00:04:48.154 +03:00 [INF] Executed page /Account/Logout in 8475.1537ms
+2025-03-23 00:04:48.157 +03:00 [INF] Executed endpoint '/Account/Logout'
+2025-03-23 00:04:48.160 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Logout - 302 0 null 8510.2577ms
+2025-03-23 00:04:48.209 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Login - null null
+2025-03-23 00:04:48.217 +03:00 [INF] Executing endpoint '/Account/Login'
+2025-03-23 00:04:48.252 +03:00 [INF] Route matched with {page = "/Account/Login", action = "", controller = ""}. Executing page /Account/Login
+2025-03-23 00:04:48.275 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2025-03-23 00:04:48.278 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:04:48.281 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:04:48.283 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:04:48.365 +03:00 [INF] Executed page /Account/Login in 110.9252ms
+2025-03-23 00:04:48.368 +03:00 [INF] Executed endpoint '/Account/Login'
+2025-03-23 00:04:48.370 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Login - 200 null text/html; charset=utf-8 161.1634ms
+2025-03-23 00:04:50.986 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Register - null null
+2025-03-23 00:04:50.992 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:04:51.007 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:04:51.066 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnGet - ModelState is "Valid"
+2025-03-23 00:04:51.070 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:04:51.073 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:04:51.075 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:04:51.148 +03:00 [INF] Executed page /Account/Register in 138.4655ms
+2025-03-23 00:04:51.152 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:04:51.154 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 168.2853ms
+2025-03-23 00:05:13.172 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5101/Account/Register - application/x-www-form-urlencoded 273
+2025-03-23 00:05:13.178 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:05:13.181 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:05:13.247 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-03-23 00:05:13.441 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-03-23 00:20:34.887 +03:00 [INF] Executed DbCommand (196ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:20:35.049 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:20:35.137 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:20:35.186 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:20:35.191 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:20:35.225 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-03-23 00:20:35.394 +03:00 [INF] User profile is available. Using 'C:\Users\lexas\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-23 00:20:35.734 +03:00 [INF] Now listening on: http://localhost:5101
+2025-03-23 00:20:35.741 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-23 00:20:35.743 +03:00 [INF] Hosting environment: Development
+2025-03-23 00:20:35.744 +03:00 [INF] Content root path: D:\RiderProjects\ReForm\ReForm.Presentation
+2025-03-23 00:20:39.804 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/ - null null
+2025-03-23 00:20:39.883 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-03-23 00:20:39.888 +03:00 [INF] Executing endpoint '/Index'
+2025-03-23 00:20:39.959 +03:00 [INF] Route matched with {page = "/Index", action = "", controller = ""}. Executing page /Index
+2025-03-23 00:20:40.026 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:20:40.641 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+2025-03-23 00:20:40.887 +03:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-03-23 00:20:40.902 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:20:40.905 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:20:41.304 +03:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" IS NULL
+LIMIT 1
+2025-03-23 00:20:41.459 +03:00 [INF] Executed page /Index in 1487.5948ms
+2025-03-23 00:20:41.467 +03:00 [INF] Executed endpoint '/Index'
+2025-03-23 00:20:41.474 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Login - null null
+2025-03-23 00:20:41.488 +03:00 [INF] Executing endpoint '/Account/Login'
+2025-03-23 00:20:41.504 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/ - 302 null text/html; charset=utf-8 1703.695ms
+2025-03-23 00:20:41.520 +03:00 [INF] Route matched with {page = "/Account/Login", action = "", controller = ""}. Executing page /Account/Login
+2025-03-23 00:20:41.550 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2025-03-23 00:20:41.553 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:20:41.556 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:20:41.558 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:20:41.637 +03:00 [INF] Executed page /Account/Login in 114.8934ms
+2025-03-23 00:20:41.640 +03:00 [INF] Executed endpoint '/Account/Login'
+2025-03-23 00:20:41.643 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Login - 200 null text/html; charset=utf-8 169.7363ms
+2025-03-23 00:20:41.770 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/css/login.css - null null
+2025-03-23 00:20:41.792 +03:00 [INF] The file /css/login.css was not modified
+2025-03-23 00:20:41.796 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/css/login.css - 304 null text/css 25.726ms
+2025-03-23 00:20:44.984 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Register - null null
+2025-03-23 00:20:44.991 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:20:45.005 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:20:45.062 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnGet - ModelState is "Valid"
+2025-03-23 00:20:45.065 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:20:45.068 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:20:45.070 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:20:45.119 +03:00 [INF] Executed page /Account/Register in 111.7028ms
+2025-03-23 00:20:45.122 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:20:45.124 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 140.1099ms
+2025-03-23 00:20:45.318 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/css/register.css - null null
+2025-03-23 00:20:45.324 +03:00 [INF] The file /css/register.css was not modified
+2025-03-23 00:20:45.327 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/css/register.css - 304 null text/css 8.6927ms
+2025-03-23 00:21:02.721 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5101/Account/Register - application/x-www-form-urlencoded 273
+2025-03-23 00:21:02.730 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:21:02.732 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:21:02.797 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-03-23 00:21:03.061 +03:00 [INF] Executed DbCommand (35ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-03-23 00:29:44.827 +03:00 [INF] Executed DbCommand (194ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:29:45.003 +03:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:29:45.092 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:29:45.142 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:29:45.148 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:29:45.182 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-03-23 00:29:45.450 +03:00 [INF] User profile is available. Using 'C:\Users\lexas\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-23 00:29:45.897 +03:00 [INF] Now listening on: http://localhost:5101
+2025-03-23 00:29:45.905 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-23 00:29:45.907 +03:00 [INF] Hosting environment: Development
+2025-03-23 00:29:45.909 +03:00 [INF] Content root path: D:\RiderProjects\ReForm\ReForm.Presentation
+2025-03-23 00:29:50.190 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/ - null null
+2025-03-23 00:29:50.271 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-03-23 00:29:50.277 +03:00 [INF] Executing endpoint '/Index'
+2025-03-23 00:29:50.351 +03:00 [INF] Route matched with {page = "/Index", action = "", controller = ""}. Executing page /Index
+2025-03-23 00:29:50.418 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:29:51.015 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+2025-03-23 00:29:51.247 +03:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-03-23 00:29:51.261 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:29:51.265 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:29:51.632 +03:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" IS NULL
+LIMIT 1
+2025-03-23 00:29:51.792 +03:00 [INF] Executed page /Index in 1422.1739ms
+2025-03-23 00:29:51.801 +03:00 [INF] Executed endpoint '/Index'
+2025-03-23 00:29:51.810 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Login - null null
+2025-03-23 00:29:51.825 +03:00 [INF] Executing endpoint '/Account/Login'
+2025-03-23 00:29:51.841 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/ - 302 null text/html; charset=utf-8 1654.2312ms
+2025-03-23 00:29:51.862 +03:00 [INF] Route matched with {page = "/Account/Login", action = "", controller = ""}. Executing page /Account/Login
+2025-03-23 00:29:51.900 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2025-03-23 00:29:51.903 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:29:51.906 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:29:51.908 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:29:51.984 +03:00 [INF] Executed page /Account/Login in 119.4174ms
+2025-03-23 00:29:51.988 +03:00 [INF] Executed endpoint '/Account/Login'
+2025-03-23 00:29:51.992 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Login - 200 null text/html; charset=utf-8 181.3387ms
+2025-03-23 00:29:54.958 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Register - null null
+2025-03-23 00:29:54.966 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:29:54.981 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:29:55.051 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnGet - ModelState is "Valid"
+2025-03-23 00:29:55.056 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:29:55.059 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:29:55.062 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:29:55.118 +03:00 [INF] Executed page /Account/Register in 133.1799ms
+2025-03-23 00:29:55.121 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:29:55.124 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 166.5318ms
+2025-03-23 00:30:07.741 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5101/Account/Register - application/x-www-form-urlencoded 275
+2025-03-23 00:30:07.749 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:30:07.752 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:30:07.827 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-03-23 00:30:08.510 +03:00 [ERR] Failed executing DbCommand (113ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = DateTime), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTime), @p8='?', @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?' (DbType = DateTime), @p15='?', @p16='?' (DbType = Boolean), @p17='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AspNetUsers" ("AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsBlocked", "LastLogin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationTime", "SecurityStamp", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING "Id";
+2025-03-23 00:30:08.633 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'ReForm.Infrastructure.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-03-23 00:30:09.146 +03:00 [INF] Executed page /Account/Register in 1391.3103ms
+2025-03-23 00:30:09.151 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:30:09.157 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.EntityFrameworkCore.UserStore`9.CreateAsync(TUser user, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user)
+   at Microsoft.AspNetCore.Identity.UserManager`1.CreateAsync(TUser user, String password)
+   at ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync(String returnUrl) in D:\RiderProjects\ReForm\ReForm.Presentation\Pages\Account\Register.cshtml.cs:line 64
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Convert[T](Object taskAsObject)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.ExecutorFactory.GenericTaskHandlerMethod.Execute(Object receiver, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeHandlerMethodAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeNextPageFilterAsync()
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Rethrow(PageHandlerExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure.PageActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2025-03-23 00:30:09.325 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5101/Account/Register - 500 null text/html; charset=utf-8 1584.0334ms
+2025-03-23 00:37:19.839 +03:00 [INF] Executed DbCommand (211ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:37:19.992 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:37:20.068 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:37:20.119 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:37:20.124 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:37:20.168 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-03-23 00:37:20.351 +03:00 [INF] User profile is available. Using 'C:\Users\lexas\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-23 00:37:20.650 +03:00 [INF] Now listening on: http://localhost:5101
+2025-03-23 00:37:20.657 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-23 00:37:20.659 +03:00 [INF] Hosting environment: Development
+2025-03-23 00:37:20.661 +03:00 [INF] Content root path: D:\RiderProjects\ReForm\ReForm.Presentation
+2025-03-23 00:37:58.165 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/ - null null
+2025-03-23 00:37:58.246 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-03-23 00:37:58.252 +03:00 [INF] Executing endpoint '/Index'
+2025-03-23 00:37:58.322 +03:00 [INF] Route matched with {page = "/Index", action = "", controller = ""}. Executing page /Index
+2025-03-23 00:37:58.403 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:37:59.040 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+2025-03-23 00:37:59.287 +03:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-03-23 00:37:59.302 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:37:59.304 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:37:59.669 +03:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" IS NULL
+LIMIT 1
+2025-03-23 00:37:59.819 +03:00 [INF] Executed page /Index in 1485.2369ms
+2025-03-23 00:37:59.826 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Login - null null
+2025-03-23 00:37:59.827 +03:00 [INF] Executed endpoint '/Index'
+2025-03-23 00:37:59.840 +03:00 [INF] Executing endpoint '/Account/Login'
+2025-03-23 00:37:59.867 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/ - 302 null text/html; charset=utf-8 1705.0264ms
+2025-03-23 00:37:59.873 +03:00 [INF] Route matched with {page = "/Account/Login", action = "", controller = ""}. Executing page /Account/Login
+2025-03-23 00:37:59.900 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2025-03-23 00:37:59.903 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:37:59.906 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:37:59.908 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:37:59.987 +03:00 [INF] Executed page /Account/Login in 111.4945ms
+2025-03-23 00:37:59.990 +03:00 [INF] Executed endpoint '/Account/Login'
+2025-03-23 00:37:59.993 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Login - 200 null text/html; charset=utf-8 167.2061ms
+2025-03-23 00:38:02.838 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Register - null null
+2025-03-23 00:38:02.846 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:38:02.862 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:38:02.921 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnGet - ModelState is "Valid"
+2025-03-23 00:38:02.925 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:38:02.928 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:38:02.930 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:38:02.974 +03:00 [INF] Executed page /Account/Register in 109.1555ms
+2025-03-23 00:38:02.977 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:38:02.981 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 142.1987ms
+2025-03-23 00:38:12.276 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5101/Account/Register - application/x-www-form-urlencoded 277
+2025-03-23 00:38:12.286 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:38:12.289 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:38:12.362 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-03-23 00:38:13.034 +03:00 [ERR] Failed executing DbCommand (98ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = DateTime), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTime), @p8='?', @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?' (DbType = DateTime), @p15='?', @p16='?' (DbType = Boolean), @p17='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AspNetUsers" ("AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsBlocked", "LastLogin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationTime", "SecurityStamp", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING "Id";
+2025-03-23 00:38:13.149 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'ReForm.Infrastructure.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-03-23 00:47:28.212 +03:00 [INF] Executed DbCommand (162ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:47:28.387 +03:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:47:28.471 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:47:28.527 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1 FROM pg_catalog.pg_class c
+    JOIN pg_catalog.pg_namespace n ON n.oid=c.relnamespace
+    WHERE n.nspname='public' AND
+          c.relname='__EFMigrationsHistory'
+)
+2025-03-23 00:47:28.533 +03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-03-23 00:47:28.567 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-03-23 00:47:28.695 +03:00 [INF] User profile is available. Using 'C:\Users\lexas\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-03-23 00:47:28.914 +03:00 [INF] Now listening on: http://localhost:5101
+2025-03-23 00:47:28.919 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-03-23 00:47:28.921 +03:00 [INF] Hosting environment: Development
+2025-03-23 00:47:28.923 +03:00 [INF] Content root path: D:\RiderProjects\ReForm\ReForm.Presentation
+2025-03-23 00:47:29.195 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/ - null null
+2025-03-23 00:47:29.260 +03:00 [WRN] Failed to determine the https port for redirect.
+2025-03-23 00:47:29.265 +03:00 [INF] Executing endpoint '/Index'
+2025-03-23 00:47:29.314 +03:00 [INF] Route matched with {page = "/Index", action = "", controller = ""}. Executing page /Index
+2025-03-23 00:47:29.369 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.IndexModel.OnGetAsync - ModelState is "Valid"
+2025-03-23 00:47:29.805 +03:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+2025-03-23 00:47:30.012 +03:00 [INF] Executed handler method OnGetAsync, returned result .
+2025-03-23 00:47:30.022 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:47:30.026 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:47:30.318 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."Email", a."EmailConfirmed", a."IsBlocked", a."LastLogin", a."LockoutEnabled", a."LockoutEnd", a."Name", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."RegistrationTime", a."SecurityStamp", a."TwoFactorEnabled", a."UserName"
+FROM "AspNetUsers" AS a
+WHERE a."Email" IS NULL
+LIMIT 1
+2025-03-23 00:47:30.447 +03:00 [INF] Executed page /Index in 1122.6417ms
+2025-03-23 00:47:30.456 +03:00 [INF] Executed endpoint '/Index'
+2025-03-23 00:47:30.461 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Login - null null
+2025-03-23 00:47:30.469 +03:00 [INF] Executing endpoint '/Account/Login'
+2025-03-23 00:47:30.479 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/ - 302 null text/html; charset=utf-8 1286.6842ms
+2025-03-23 00:47:30.495 +03:00 [INF] Route matched with {page = "/Account/Login", action = "", controller = ""}. Executing page /Account/Login
+2025-03-23 00:47:30.521 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.LoginModel.OnGet - ModelState is "Valid"
+2025-03-23 00:47:30.524 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:47:30.526 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:47:30.528 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:47:30.598 +03:00 [INF] Executed page /Account/Login in 101.1351ms
+2025-03-23 00:47:30.601 +03:00 [INF] Executed endpoint '/Account/Login'
+2025-03-23 00:47:30.604 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Login - 200 null text/html; charset=utf-8 143.1791ms
+2025-03-23 00:47:30.727 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/css/login.css - null null
+2025-03-23 00:47:30.746 +03:00 [INF] The file /css/login.css was not modified
+2025-03-23 00:47:30.749 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/css/login.css - 304 null text/css 21.8651ms
+2025-03-23 00:47:35.071 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/Account/Register - null null
+2025-03-23 00:47:35.078 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:47:35.096 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:47:35.210 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnGet - ModelState is "Valid"
+2025-03-23 00:47:35.213 +03:00 [INF] Executed handler method OnGet, returned result .
+2025-03-23 00:47:35.217 +03:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-03-23 00:47:35.219 +03:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:47:35.272 +03:00 [INF] Executed page /Account/Register in 172.7287ms
+2025-03-23 00:47:35.274 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:47:35.277 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 206.2462ms
+2025-03-23 00:47:35.560 +03:00 [INF] Request starting HTTP/1.1 GET http://localhost:5101/css/register.css - null null
+2025-03-23 00:47:35.566 +03:00 [INF] The file /css/register.css was not modified
+2025-03-23 00:47:35.569 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5101/css/register.css - 304 null text/css 8.1678ms
+2025-03-23 00:47:43.915 +03:00 [INF] Request starting HTTP/1.1 POST http://localhost:5101/Account/Register - application/x-www-form-urlencoded 275
+2025-03-23 00:47:43.926 +03:00 [INF] Executing endpoint '/Account/Register'
+2025-03-23 00:47:43.928 +03:00 [INF] Route matched with {page = "/Account/Register", action = "", controller = ""}. Executing page /Account/Register
+2025-03-23 00:47:43.998 +03:00 [INF] Executing handler method ReForm.Presentation.Pages.Account.RegisterModel.OnPostAsync - ModelState is "Valid"
+2025-03-23 00:47:44.584 +03:00 [ERR] Failed executing DbCommand (95ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?', @p2='?', @p3='?' (DbType = Boolean), @p4='?' (DbType = Boolean), @p5='?' (DbType = DateTime), @p6='?' (DbType = Boolean), @p7='?' (DbType = DateTime), @p8='?', @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?' (DbType = DateTime), @p15='?', @p16='?' (DbType = Boolean), @p17='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "AspNetUsers" ("AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "IsBlocked", "LastLogin", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationTime", "SecurityStamp", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17)
+RETURNING "Id";
+2025-03-23 00:47:44.659 +03:00 [ERR] An exception occurred in the database while saving changes for context type 'ReForm.Infrastructure.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Npgsql.PostgresException (0x80004005): 23505: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+
+DETAIL: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+  Exception data:
+    Severity: ERROR
+    SqlState: 23505
+    MessageText: duplicate key value violates unique constraint "IX_AspNetUsers_Email"
+    Detail: Detail redacted as it may contain sensitive data. Specify 'Include Error Detail' in the connection string to include this information.
+    SchemaName: public
+    TableName: AspNetUsers
+    ConstraintName: IX_AspNetUsers_Email
+    File: nbtinsert.c
+    Line: 673
+    Routine: _bt_check_unique
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.NpgsqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2025-03-23 00:47:44.698 +03:00 [INF] Executed handler method OnPostAsync, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-03-23 00:47:44.711 +03:00 [INF] Executed page /Account/Register in 779.956ms
+2025-03-23 00:47:44.714 +03:00 [INF] Executed endpoint '/Account/Register'
+2025-03-23 00:47:44.717 +03:00 [INF] Request finished HTTP/1.1 POST http://localhost:5101/Account/Register - 200 null text/html; charset=utf-8 801.4041ms

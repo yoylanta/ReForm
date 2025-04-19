@@ -1,18 +1,31 @@
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ReForm.Core.DTOs;
+using ReForm.Core.Interfaces;
+using ReForm.Core.Models.Identity;
 
 namespace ReForm.Presentation.Pages;
 
-public class IndexModel : PageModel
+[Authorize]
+public class Index(
+    IUserService userService,
+    UserManager<User> userManager,
+    ITemplateService templateService) : BasePageModel(userService)
 {
-    private readonly ILogger<IndexModel> _logger;
+    public List<TemplateFormDto> MyTemplates { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public async Task OnGetAsync()
     {
-        _logger = logger;
-    }
-
-    public void OnGet()
-    {
+        await RedirectIfNotAuthenticated();
+        var userId = int.Parse(userManager.GetUserId(User));
+        MyTemplates = (await templateService.GetByUserIdAsync(userId))
+            .Select(t => new TemplateFormDto(t)
+            {
+                Id = t.Id,
+                Title = t.Title,
+                UserId = t.UserId
+            })
+            .ToList() ?? new List<TemplateFormDto>();
     }
 }
