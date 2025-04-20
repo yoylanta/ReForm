@@ -5,6 +5,7 @@
 
 @{
     var user = await userService.GetByEmailAsync(User?.Identity?.Name);
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <div class="container">

@@ -1,5 +1,18 @@
+let editMode = false;
+
 document.addEventListener("DOMContentLoaded", () => {
     MicroModal.init();
+
+    // Setup template card click handlers
+    document.querySelectorAll(".template-card").forEach(card => {
+        card.addEventListener("click", (e) => {
+            if (editMode) return; // Block navigation in edit mode
+            if (e.target.type === "checkbox") return;
+
+            const templateId = card.dataset.templateId;
+            window.location.href = `/TemplateSetup/Edit?id=${templateId}`;
+        });
+    });
 });
 
 function createNewTemplate() {
@@ -33,5 +46,64 @@ async function saveTemplate() {
     } catch (err) {
         console.error(err);
         alert("Error occurred while saving template.");
+    }
+}
+
+function redirectToEditPage(templateId) {
+    window.location.href = `/TemplateSetup/Edit?id=${templateId}`;
+}
+
+let deleteMode = false;
+
+function toggleEditMode() {
+    editMode = !editMode;
+
+    const checkboxes = document.querySelectorAll(".template-checkbox");
+    const deleteBtn = document.getElementById("delete-selected");
+    const editBtn = document.getElementById("edit-mode-toggle");
+
+    if (editMode) {
+        checkboxes.forEach(cb => cb.style.display = "inline-block");
+        deleteBtn.style.display = "inline-block";
+        editBtn.innerText = "Exit Edit Mode";
+    } else {
+        checkboxes.forEach(cb => {
+            cb.checked = false;
+            cb.style.display = "none";
+        });
+        deleteBtn.style.display = "none";
+        editBtn.innerText = "Edit";
+    }
+}
+
+async function deleteSelectedTemplates() {
+    const confirmed = confirm("Are you sure you want to delete the selected templates?");
+    if (!confirmed) return;
+
+    const selectedIds = Array.from(document.querySelectorAll(".template-checkbox:checked"))
+        .map(cb => cb.closest(".template-card").dataset.templateId);
+
+    if (selectedIds.length === 0) {
+        alert("No templates selected.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/template/delete', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(selectedIds)
+        });
+
+        if (response.ok) {
+            // Reload to reflect changes
+            location.reload();
+        } else {
+            const error = await response.text();
+            alert("Failed to delete templates: " + error);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Error occurred while deleting templates.");
     }
 }

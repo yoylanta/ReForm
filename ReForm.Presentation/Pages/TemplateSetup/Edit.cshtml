@@ -1,31 +1,100 @@
 @page
 @model ReForm.Presentation.Pages.TemplateSetup.EditModel
 @using ReForm.Core.Models.Enums
-@{
-    ViewData["Title"] = "Edit Template";
-}
 
-<script src="/lib/micromodal/dist/micromodal.min.js"></script>
-<script src="/js/edit.js"></script>
-<link rel="stylesheet" href="/css/edit.css"/>
+<link rel="stylesheet" href="~/css/homepage.css"/>
+<link rel="stylesheet" href="~/css/edit.css"/>
+<script src="~/js/edit.js" defer></script>
 
-<h1>Edit Template: @Model.Template.Title</h1>
+<div class="template-container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Edit: @Model.Template.Title</h1>
+    </div>
 
-<hr/>
-<h2>Questions</h2>
+    <div id="questions-list" class="row gx-3 gy-4">
+        @foreach (var q in Model.Template.Questions)
+        {
+            var bgClass = q.Type switch
+            {
+                QuestionTypeEnum.SingleChoice => "bg-question-SingleChoice",
+                QuestionTypeEnum.MultipleChoice => "bg-question-MultipleChoice",
+                QuestionTypeEnum.Text => "bg-question-Text",
+                QuestionTypeEnum.Rating => "bg-question-Rating",
+                QuestionTypeEnum.Date => "bg-question-Date",
+                _ => ""
+            };
 
-<ul id="questions-list">
-    @foreach (var q in Model.Template.Questions)
-    {
-        <li>
-            <strong>@q.Text</strong> (@q.Type) - @(q.IsMandatory ? "Required" : "Optional")
-        </li>
-    }
-</ul>
+            <div class="col-md-6">
+                <div class="question-card @bgClass">
+                    <h5>@q.Text</h5>
+                    <div class="question-meta">@q.Type.ToString() @(q.IsMandatory ? "Required" : "Optional")</div>
 
-<button class="btn btn-primary" onclick="MicroModal.show('add-question-modal')">
-    Add New Question
-</button>
+                    @if (q.Type == QuestionTypeEnum.SingleChoice || q.Type == QuestionTypeEnum.MultipleChoice)
+                    {
+                        <div class="options-list-display">
+                            @foreach (var opt in q.Options?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>())
+                            {
+                                <div class="option-pill">@opt.Trim()</div>
+                            }
+                        </div>
+                    }
+                    else if (q.Type == QuestionTypeEnum.Text)
+                    {
+                        <input type="text" placeholder="Text input" disabled/>
+                    }
+                    else if (q.Type == QuestionTypeEnum.Date)
+                    {
+                        <input type="date" disabled/>
+                    }
+                    else if (q.Type == QuestionTypeEnum.Rating)
+                    {
+                        <div class="rating-stars">★ ★ ★ ★ ★</div>
+                    }
+                </div>
+            </div>
+        }
 
-<!-- Include modal as partial -->
-@await Html.PartialAsync("_AddQuestionModal", Model.Template.Id)
+        <!-- Unified Add/Edit Card -->
+        <div class="col-md-6">
+            <div id="add-question-wrapper" class="card add-question-card">
+                <!-- Add mode -->
+                <div id="add-question-card"
+                     class="card-body d-flex flex-column align-items-center justify-content-center"
+                     onclick="startNewQuestion()">
+                    <i class="bi bi-plus-circle fs-1 text-primary mb-2"></i>
+                    <span class="text-muted">Add question</span>
+                </div>
+
+                <!-- Edit mode -->
+                <div id="new-question-form" class="d-none p-3 w-100">
+                    <input type="text" id="new-text" class="form-control mb-3" placeholder="Untitled question"/>
+
+                    <select id="new-type" class="form-select mb-3" onchange="toggleNewOptions()">
+                        @foreach (QuestionTypeEnum t in Enum.GetValues(typeof(QuestionTypeEnum)))
+                        {
+                            <option value="@((int)t)">@t</option>
+                        }
+                    </select>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="new-mandatory"/>
+                        <label class="form-check-label" for="new-mandatory">Required</label>
+                    </div>
+
+                    <div id="options-container" style="display: none;">
+                        <label class="form-label">Answer Options:</label>
+                        <div id="options-list"></div>
+                        <button type="button" class="btn btn-link p-0" onclick="addOption()">+ Add option</button>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-3">
+                        <button type="button" class="btn btn-link" onclick="cancelNewQuestion()">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="saveNewQuestion(@Model.Template.Id)">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

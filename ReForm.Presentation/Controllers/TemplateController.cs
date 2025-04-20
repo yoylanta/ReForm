@@ -39,18 +39,37 @@ public class TemplatesController(
         }
     }
 
+    [HttpPost("delete")]
+    [IgnoreAntiforgeryToken]
+    public async Task<IActionResult> DeleteMultipleTemplates([FromBody] List<int> templateIds)
+    {
+        var userId = int.Parse(userManager.GetUserId(User!));
+        try
+        {
+            await templateService.DeleteTemplatesAsync(templateIds, userId);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
     [HttpPost("question/add")]
     [IgnoreAntiforgeryToken]
-    public async Task<IActionResult> AddQuestion(int templateId, [FromBody] TemplateQuestionDto questionDto)
+    public async Task<IActionResult> AddQuestion([FromBody] TemplateQuestionDto questionDto)
     {
         if (string.IsNullOrWhiteSpace(questionDto.Text))
             return BadRequest("Question text is required.");
-
-        questionDto.TemplateFormId = templateId;
 
         await templateService.AddQuestionAsync(questionDto);
 
         return Ok();
     }
 
+}
+
+public class DeleteTemplatesRequest
+{
+    public List<int> TemplateIds { get; set; } = [];
 }

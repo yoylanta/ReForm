@@ -12,16 +12,34 @@
 <div class="template-container">
     <div class="header">
         <h1>My Templates</h1>
-        <button class="btn btn-outline-primary me-2" onclick="createNewTemplate()">Create New Template</button>
+        <div>
+            <button id="edit-mode-toggle" class="btn btn-outline-secondary me-2" onclick="toggleEditMode()">Edit
+            </button>
+            <button id="delete-selected" class="btn btn-danger me-2" style="display: none;"
+                    onclick="deleteSelectedTemplates()">Delete Selected
+            </button>
+            <button class="btn btn-outline-primary" onclick="createNewTemplate()">Create New Template</button>
+        </div>
     </div>
 
     <div class="template-grid">
         @foreach (var form in Model.MyTemplates)
         {
-            <div class="template-card">
+            <div class="template-card" data-template-id="@form.Id">
+                <div class="checkbox-container">
+                    <input type="checkbox" class="template-checkbox" style="display: none;"/>
+                </div>
                 <h3>@form.Title</h3>
                 <p>ID: @form.Id</p>
             </div>
         }
+    </div>
+
+    <div id="delete-confirmation-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h2>Are you sure you want to delete the selected templates?</h2>
+            <button class="btn btn-danger" onclick="deleteSelectedTemplates()">Yes, Delete</button>
+            <button class="btn btn-secondary" onclick="cancelDelete()">Cancel</button>
+        </div>
     </div>
 </div>

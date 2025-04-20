@@ -12,4 +12,7 @@ public interface ITemplateService
     Task<TemplateForm?> GetTemplateFormWithQuestionsAsync(int id);
 
     Task AddQuestionAsync(TemplateQuestionDto question);
+
+    Task DeleteTemplatesAsync(List<int> templateIds, int userId);
+
 }

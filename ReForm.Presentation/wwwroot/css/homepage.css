@@ -118,3 +118,35 @@ button.save-template {
 button.save-template:hover {
     background-color: #0056b3;
 }
+
+.template-card {
+    position: relative;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.template-card:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.template-checkbox {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+}
+
+.template-checkbox[style*="display: inline-block"] {
+    opacity: 1;
+}

@@ -49,4 +49,13 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
 
         return templateForm;
     }
+
+    public async Task DeleteTemplatesAsync(List<int> templateIds, int userId)
+    {
+        var templates = await repository.FindAsync(t => templateIds.Contains(t.Id) && t.UserId == userId);
+
+        repository.RemoveRange(templates);
+
+        await repository.SaveChangesAsync();
+    }
 }

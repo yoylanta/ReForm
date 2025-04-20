@@ -1,99 +1,66 @@
-/* edit.css */
-
-body {
-    background-color: #f9f9f9;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h1 {
-    margin-bottom: 1rem;
-}
-
-#questions-list {
-    padding-left: 1.2rem;
-    margin-bottom: 2rem;
-}
-
-#questions-list li {
-    margin-bottom: 0.5rem;
-    font-size: 1.05rem;
-}
-
-.modal__overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal__container {
-    background-color: #fff;
+.question-card {
+    padding: 20px;
     border-radius: 12px;
-    padding: 2rem;
-    max-width: 500px;
-    width: 100%;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    animation: slideUp 0.3s ease-out;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    color: #333;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-@keyframes slideUp {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+.bg-question-MultipleChoice {
+    background-color: #f9e1ff;
 }
 
-.modal__header {
+.bg-question-SingleChoice {
+    background-color: #e1f0ff;
+}
+
+.bg-question-Text {
+    background-color: #fff7dd;
+}
+
+.bg-question-Rating {
+    background-color: #e2fbe1;
+}
+
+.bg-question-Date {
+    background-color: #ffe1e1;
+}
+
+.question-card h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.question-meta {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.options-list-display {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.modal__header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.modal__close {
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: #888;
-}
-
-.modal__content {
-    margin-top: 1rem;
-}
-
-.modal__content label {
-    margin-top: 0.75rem;
-    display: block;
-    font-weight: 500;
-}
-
-.modal__footer {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-}
-
-textarea.form-control,
-input.form-control,
-select.form-control {
-    margin-top: 0.25rem;
-    width: 100%;
-    padding: 0.5rem;
-    border-radius: 6px;
+.option-pill {
+    background-color: #fff;
+    padding: 6px 12px;
+    border-radius: 20px;
     border: 1px solid #ccc;
-    box-sizing: border-box;
+    font-size: 13px;
 }
 
-#options-container {
-    margin-top: 1rem;
+.rating-stars {
+    font-size: 20px;
+    color: #f7b500;
+}
+
+input[type="text"], input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
 }

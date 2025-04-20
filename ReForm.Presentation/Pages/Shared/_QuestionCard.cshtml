@@ -1,0 +1,25 @@
+@model ReForm.Core.Models.Templates.TemplateQuestion
+
+<div class="card question-card bg-type-@Model.Type">
+    <div class="card-body position-relative">
+        <div class="question-tools">
+            <i class="bi bi-pencil-square me-2" title="Edit"></i>
+            <i class="bi bi-trash" title="Delete"></i>
+        </div>
+        <h5 class="card-title">@Model.Text</h5>
+        <p class="mb-1">
+            <span class="badge bg-light text-dark me-1">@Model.Type</span>
+            <small class="text-muted">@(Model.IsMandatory ? "Required" : "Optional")</small>
+        </p>
+        @if (!string.IsNullOrWhiteSpace(Model.Options))
+        {
+            <ul class="list-unstyled ms-3">
+                @foreach (var opt in Model.Options
+                                  .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <li>• @opt.Trim()</li>
+                }
+            </ul>
+        }
+    </div>
+</div>

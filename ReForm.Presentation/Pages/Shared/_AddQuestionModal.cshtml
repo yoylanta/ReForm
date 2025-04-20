@@ -10,10 +10,10 @@
                         onclick="MicroModal.close('add-question-modal')"></button>
             </header>
             <main class="modal__content">
-                <label>Question Text:</label>
+                <label for="question-text">Question Text:</label>
                 <input type="text" id="question-text" class="form-control"/>
 
-                <label>Question Type:</label>
+                <label for="question-type">Question Type:</label>
                 <select id="question-type" class="form-control" onchange="toggleOptionsInput()">
                     <option value="SingleChoice">SingleChoice</option>
                     <option value="MultipleChoice">MultipleChoice</option>
@@ -22,12 +22,13 @@
                     <option value="Date">Date</option>
                 </select>
 
-                <label>
-                    <input type="checkbox" id="is-mandatory"/> Is Mandatory
-                </label>
+                <div class="form-check mt-2 mb-2">
+                    <input type="checkbox" class="form-check-input" id="is-mandatory"/>
+                    <label class="form-check-label" for="is-mandatory">Is Mandatory</label>
+                </div>
 
                 <div id="options-container" style="display:none;">
-                    <label>Answer Options (comma-separated):</label>
+                    <label for="question-options">Answer Options (comma-separated):</label>
                     <textarea id="question-options" class="form-control"></textarea>
                 </div>
             </main>
