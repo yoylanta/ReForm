@@ -1,3 +1,3 @@
-# User Management App
+# ReForm
 
-A web application built with Razor Pages, C#, .NET, and PostgreSQL for managing user accounts with authentication and access control
+ReForm is a Razor Pages web application using C#, .NET, and PostgreSQL, designed to let authenticated users create, edit, and manage custom template forms.
