@@ -2,8 +2,8 @@
 @model ReForm.Presentation.Pages.TemplateSetup.EditModel
 @using ReForm.Core.Models.Enums
 
-<link rel="stylesheet" href="~/css/homepage.css"/>
-<link rel="stylesheet" href="~/css/edit.css"/>
+<link rel="stylesheet" href="~/css/homepage.css" />
+<link rel="stylesheet" href="~/css/edit.css" />
 <script src="~/js/edit.js" defer></script>
 
 <div class="template-container mt-4">
@@ -24,75 +24,170 @@
                 _ => ""
             };
 
-            <div class="col-md-6">
+            <div class="col-12">
                 <div class="question-card @bgClass">
                     <h5>@q.Text</h5>
-                    <div class="question-meta">@q.Type.ToString() @(q.IsMandatory ? "Required" : "Optional")</div>
+                    <div class="question-meta">
+                        @q.Type.ToString()
+                        @(q.IsMandatory ? "Required" : "Optional")
+                    </div>
 
-                    @if (q.Type == QuestionTypeEnum.SingleChoice || q.Type == QuestionTypeEnum.MultipleChoice)
+                    <!-- Edit/Delete icons (hidden by default) -->
+                    <div class="icons-container d-none">
+                        <button type="button"
+                                class="btn btn-sm btn-warning edit-btn"
+                                data-id="@q.Id">
+                            ✎
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-danger delete-btn"
+                                data-id="@q.Id">
+                            🗑
+                        </button>
+                    </div>
+
+                    @if (q.Type == QuestionTypeEnum.SingleChoice ||
+                   q.Type == QuestionTypeEnum.MultipleChoice)
                     {
+                        var icon = q.Type == QuestionTypeEnum.SingleChoice
+                        ? "&#9675;"
+                        : "&#9633;";
+
                         <div class="options-list-display">
-                            @foreach (var opt in q.Options?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>())
+                            @foreach (var opt in q.Options?
+                           .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                           ?? Enumerable.Empty<string>())
                             {
-                                <div class="option-pill">@opt.Trim()</div>
+                                <div class="option-pill">
+                                    <span class="option-icon">
+                                        @Html.Raw(icon)
+                                    </span>
+                                    @opt.Trim()
+                                </div>
                             }
                         </div>
                     }
                     else if (q.Type == QuestionTypeEnum.Text)
                     {
-                        <input type="text" placeholder="Text input" disabled/>
+                        <input type="text" placeholder="Text input" disabled />
                     }
                     else if (q.Type == QuestionTypeEnum.Date)
                     {
-                        <input type="date" disabled/>
+                        <input type="date" disabled />
                     }
                     else if (q.Type == QuestionTypeEnum.Rating)
                     {
-                        <div class="rating-stars">★ ★ ★ ★ ★</div>
+                        var parts = q.Options?
+                        .Split('-', StringSplitOptions.RemoveEmptyEntries);
+                        int min = 1, max = 5;
+
+                        if (parts != null && parts.Length == 2
+                        && int.TryParse(parts[0], out var pMin)
+                        && int.TryParse(parts[1], out var pMax))
+                        {
+                            min = pMin; max = pMax;
+                        }
+
+                        if (min < 0) min = 0;
+                        if (max < min) max = min;
+
+                        <div class="rating-stars">
+                            @for (int i = min; i <= max; i++)
+                            {
+                                <span class="star">&#9733;</span>
+                            }
+                        </div>
                     }
                 </div>
             </div>
         }
 
-        <!-- Unified Add/Edit Card -->
-        <div class="col-md-6">
-            <div id="add-question-wrapper" class="card add-question-card">
-                <!-- Add mode -->
-                <div id="add-question-card"
-                     class="card-body d-flex flex-column align-items-center justify-content-center"
-                     onclick="startNewQuestion()">
-                    <i class="bi bi-plus-circle fs-1 text-primary mb-2"></i>
-                    <span class="text-muted">Add question</span>
+        <!-- Add Question Button -->
+        <div class="col-12 d-flex justify-content-center mt-3 mb-4">
+            <button id="add-btn"
+                    class="btn btn-outline-primary rounded-circle">
+                +
+            </button>
+        </div>
+
+        <!-- Hidden new question form container -->
+        <div id="new-question-form-wrapper" class="col-12 d-none">
+            <div id="new-question-form" class="card p-4">
+                <div class="mb-3">
+                    <label for="new-text" class="form-label">
+                        Question Text
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           id="new-text" />
                 </div>
 
-                <!-- Edit mode -->
-                <div id="new-question-form" class="d-none p-3 w-100">
-                    <input type="text" id="new-text" class="form-control mb-3" placeholder="Untitled question"/>
-
-                    <select id="new-type" class="form-select mb-3" onchange="toggleNewOptions()">
-                        @foreach (QuestionTypeEnum t in Enum.GetValues(typeof(QuestionTypeEnum)))
-                        {
-                            <option value="@((int)t)">@t</option>
-                        }
+                <div class="mb-3">
+                    <label for="new-type" class="form-label">
+                        Question Type
+                    </label>
+                    <select class="form-select"
+                            id="new-type"
+                            onchange="toggleNewOptions()">
+                        <option value="0">Single Choice</option>
+                        <option value="1">Multiple Choice</option>
+                        <option value="2">Text</option>
+                        <option value="3">Rating</option>
+                        <option value="4">Date</option>
                     </select>
+                </div>
 
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="new-mandatory"/>
-                        <label class="form-check-label" for="new-mandatory">Required</label>
-                    </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           id="new-mandatory" />
+                    <label class="form-check-label"
+                           for="new-mandatory">
+                        Required
+                    </label>
+                </div>
 
-                    <div id="options-container" style="display: none;">
-                        <label class="form-label">Answer Options:</label>
-                        <div id="options-list"></div>
-                        <button type="button" class="btn btn-link p-0" onclick="addOption()">+ Add option</button>
-                    </div>
+                <div class="mb-3" id="options-container" style="display: none;">
+                    <label class="form-label">Options</label>
+                    <div id="options-list" class="mb-2"></div>
+                    <button class="btn btn-sm btn-secondary"
+                            type="button"
+                            onclick="addOption()">
+                        + Add Option
+                    </button>
+                </div>
 
-                    <div class="d-flex justify-content-end gap-2 mt-3">
-                        <button type="button" class="btn btn-link" onclick="cancelNewQuestion()">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="saveNewQuestion(@Model.Template.Id)">
-                            Save
-                        </button>
+                <div id="rating-range-container" class="mb-3 d-none">
+                    <label for="rating-min">
+                        Rating Range (e.g. 1 to 5):
+                    </label>
+                    <div class="d-flex gap-2 align-items-center">
+                        <input type="number"
+                               id="rating-min"
+                               class="form-control"
+                               placeholder="Min"
+                               min="0" />
+                        <span>to</span>
+                        <input type="number"
+                               id="rating-max"
+                               class="form-control"
+                               placeholder="Max"
+                               min="1" />
                     </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button id="cancel-btn"
+                            class="btn btn-outline-secondary"
+                            type="button">
+                        Cancel
+                    </button>
+                    <button id="save-btn"
+                            class="btn btn-primary"
+                            type="button"
+                            data-template-id="@Model.Template.Id">
+                        Save
+                    </button>
                 </div>
             </div>
         </div>

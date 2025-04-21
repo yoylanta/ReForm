@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Templates;
@@ -58,4 +59,33 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
 
         await repository.SaveChangesAsync();
     }
+
+    public async Task<TemplateQuestionDto?> GetQuestionAsync(int questionId)
+    {
+        var q = await questionRepository.FirstOrDefaultAsync(x => x.Id == questionId);
+        if (q == null) return null;
+        return new TemplateQuestionDto(q);
+    }
+
+    public async Task<bool> EditQuestionAsync(int questionId, string newText)
+    {
+        var question = await questionRepository.FirstOrDefaultAsync(q => q.Id == questionId);
+        if (question == null) return false;
+
+        question.Text = newText;
+
+        await questionRepository.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> DeleteQuestionAsync(int questionId)
+    {
+        var question = await questionRepository.FirstOrDefaultAsync(q => q.Id == questionId);
+        if (question == null) return false;
+
+        questionRepository.Remove(question);
+        await questionRepository.SaveChangesAsync();
+        return true;
+    }
+
 }
