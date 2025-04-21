@@ -162,3 +162,54 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async () => {
+            const questionId = button.getAttribute('data-id');
+
+            const confirmed = await Swal.fire({
+                icon: 'warning',
+                title: 'Are you sure?',
+                text: `Are you sure you want to delete this question?`,
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+            });
+
+            if (confirmed.isConfirmed) {
+                try {
+                    const response = await fetch(`/api/template/question/delete/${encodeURIComponent(questionId)}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
+
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: `Successfully deleted question with ID: ${questionId}`,
+                        }).then(() => location.reload());
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to delete',
+                            text: 'An error occurred while deleting the question.',
+                        });
+                    }
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred',
+                        text: 'Failed to delete the question due to an error.',
+                    });
+                }
+            }
+        });
+    });
+});

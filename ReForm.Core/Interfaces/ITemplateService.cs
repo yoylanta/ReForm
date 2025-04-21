@@ -17,7 +17,7 @@ public interface ITemplateService
 
     Task<TemplateQuestionDto?> GetQuestionAsync(int questionId);
 
-    Task<bool> EditQuestionAsync(int questionId, string newText);
+    Task<bool> EditQuestionAsync(TemplateQuestionDto questionDto);
 
     Task<bool> DeleteQuestionAsync(int questionId);
 }

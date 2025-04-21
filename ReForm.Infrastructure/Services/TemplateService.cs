@@ -67,13 +67,17 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
         return new TemplateQuestionDto(q);
     }
 
-    public async Task<bool> EditQuestionAsync(int questionId, string newText)
+    public async Task<bool> EditQuestionAsync(TemplateQuestionDto questionDto)
     {
-        var question = await questionRepository.FirstOrDefaultAsync(q => q.Id == questionId);
+        var question = await questionRepository.FirstOrDefaultAsync(q => q.Id == questionDto.Id);
         if (question == null) return false;
 
-        question.Text = newText;
+        question.Text = questionDto.Text;
+        question.Type = questionDto.Type;
+        question.Options = questionDto.Options;
+        question.IsMandatory = questionDto.IsMandatory;
 
+        questionRepository.Update(question);
         await questionRepository.SaveChangesAsync();
         return true;
     }
