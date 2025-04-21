@@ -2,8 +2,8 @@
 @model ReForm.Presentation.Pages.TemplateSetup.EditModel
 @using ReForm.Core.Models.Enums
 
-<link rel="stylesheet" href="~/css/homepage.css" />
-<link rel="stylesheet" href="~/css/edit.css" />
+<link rel="stylesheet" href="~/css/homepage.css"/>
+<link rel="stylesheet" href="~/css/edit.css"/>
 <script src="~/js/edit.js" defer></script>
 
 <div class="template-container mt-4">
@@ -33,7 +33,7 @@
                     </div>
 
                     <!-- Edit/Delete icons (hidden by default) -->
-                    <div class="icons-container d-none">
+                    <div class="icons-container ">
                         <button type="button"
                                 class="btn btn-sm btn-warning edit-btn"
                                 data-id="@q.Id">
@@ -47,16 +47,16 @@
                     </div>
 
                     @if (q.Type == QuestionTypeEnum.SingleChoice ||
-                   q.Type == QuestionTypeEnum.MultipleChoice)
+                         q.Type == QuestionTypeEnum.MultipleChoice)
                     {
                         var icon = q.Type == QuestionTypeEnum.SingleChoice
-                        ? "&#9675;"
-                        : "&#9633;";
+                            ? "&#9675;"
+                            : "&#9633;";
 
                         <div class="options-list-display">
                             @foreach (var opt in q.Options?
-                           .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                           ?? Enumerable.Empty<string>())
+                                                     .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                                 ?? Enumerable.Empty<string>())
                             {
                                 <div class="option-pill">
                                     <span class="option-icon">
@@ -69,23 +69,24 @@
                     }
                     else if (q.Type == QuestionTypeEnum.Text)
                     {
-                        <input type="text" placeholder="Text input" disabled />
+                        <input type="text" placeholder="Text input" disabled/>
                     }
                     else if (q.Type == QuestionTypeEnum.Date)
                     {
-                        <input type="date" disabled />
+                        <input type="date" disabled/>
                     }
                     else if (q.Type == QuestionTypeEnum.Rating)
                     {
                         var parts = q.Options?
-                        .Split('-', StringSplitOptions.RemoveEmptyEntries);
+                            .Split('-', StringSplitOptions.RemoveEmptyEntries);
                         int min = 1, max = 5;
 
                         if (parts != null && parts.Length == 2
-                        && int.TryParse(parts[0], out var pMin)
-                        && int.TryParse(parts[1], out var pMax))
+                                          && int.TryParse(parts[0], out var pMin)
+                                          && int.TryParse(parts[1], out var pMax))
                         {
-                            min = pMin; max = pMax;
+                            min = pMin;
+                            max = pMax;
                         }
 
                         if (min < 0) min = 0;
@@ -111,7 +112,7 @@
         </div>
 
         <!-- Hidden new question form container -->
-        <div id="new-question-form-wrapper" class="col-12 d-none">
+        <div id="new-question-form-wrapper" class="col-12">
             <div id="new-question-form" class="card p-4">
                 <div class="mb-3">
                     <label for="new-text" class="form-label">
@@ -119,7 +120,7 @@
                     </label>
                     <input type="text"
                            class="form-control"
-                           id="new-text" />
+                           id="new-text"/>
                 </div>
 
                 <div class="mb-3">
@@ -140,7 +141,7 @@
                 <div class="form-check mb-3">
                     <input class="form-check-input"
                            type="checkbox"
-                           id="new-mandatory" />
+                           id="new-mandatory"/>
                     <label class="form-check-label"
                            for="new-mandatory">
                         Required
@@ -157,7 +158,7 @@
                     </button>
                 </div>
 
-                <div id="rating-range-container" class="mb-3 d-none">
+                <div id="rating-range-container" class="mb-3">
                     <label for="rating-min">
                         Rating Range (e.g. 1 to 5):
                     </label>
@@ -166,13 +167,13 @@
                                id="rating-min"
                                class="form-control"
                                placeholder="Min"
-                               min="0" />
+                               min="0"/>
                         <span>to</span>
                         <input type="number"
                                id="rating-max"
                                class="form-control"
                                placeholder="Max"
-                               min="1" />
+                               min="1"/>
                     </div>
                 </div>
 

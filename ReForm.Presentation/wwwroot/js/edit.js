@@ -1,4 +1,12 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿const questionType = {
+    SingleChoice: 0,
+    MultipleChoice: 1,
+    Text: 2,
+    Rating: 3,
+    Date: 4
+};
+
+document.addEventListener('DOMContentLoaded', function () {
     const addBtn = document.getElementById('add-btn');
     const formWrapper = document.getElementById('new-question-form-wrapper');
     const cancelBtn = document.getElementById('cancel-btn');
@@ -78,6 +86,8 @@
         }
     }
 
+    window.toggleNewOptions = toggleNewOptions;
+
     // Функция добавления новой опции
     function addOption(value = '') {
         const optionsList = document.getElementById('options-list');
@@ -100,5 +110,55 @@
 
         group.append(icon, input, removeBtn);
         optionsList.appendChild(group);
+    }
+
+    window.addOption = addOption;
+
+    async function saveNewQuestion(templateId) {
+        const text = document.getElementById('new-text').value.trim();
+        const type = parseInt(document.getElementById('new-type').value);
+        const isMandatory = document.getElementById('new-mandatory').checked;
+
+        if (!text) {
+            alert('Question text is required');
+            return;
+        }
+
+        let options = [];
+        if (type === questionType.SingleChoice || type === questionType.MultipleChoice) {
+            const inputs = document.querySelectorAll('#options-list input');
+            options = Array.from(inputs)
+                .map(input => input.value.trim())
+                .filter(value => value);
+            if (options.length === 0) {
+                alert('Please add at least one option.');
+                return;
+            }
+        }
+
+        const payload = {
+            text: text,
+            type: type,
+            isMandatory: isMandatory,
+            options: options.join(','),
+            templateFormId: templateId
+        };
+
+        try {
+            const res = await fetch('/api/template/question/add', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                location.reload();
+            } else {
+                const err = await res.text();
+                alert(`Could not add question:\n${err}`);
+            }
+        } catch (error) {
+            alert('An error occurred while adding the question.');
+        }
     }
 });
