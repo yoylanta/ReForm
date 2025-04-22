@@ -1,4 +1,5 @@
-﻿const questionType = {
+﻿// edit.js
+const questionType = {
     SingleChoice: 0,
     MultipleChoice: 1,
     Text: 2,
@@ -6,210 +7,205 @@
     Date: 4
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const addBtn = document.getElementById('add-btn');
     const formWrapper = document.getElementById('new-question-form-wrapper');
     const cancelBtn = document.getElementById('cancel-btn');
     const saveBtn = document.getElementById('save-btn');
+    const hiddenId = document.getElementById('question-id');
+    let currentEditingCard = null;
 
-    // Проверка наличия кнопок
-    if (!addBtn || !formWrapper) {
-        console.error('Кнопка "Add" или форма не найдены!');
-        return;
-    }
-
-    // 1. Скрываем форму по умолчанию
-    formWrapper.classList.add('d-none');
-
-    // 2. Обработчик клика на кнопку "Add Question"
-    addBtn.addEventListener('click', function () {
-        console.log('Кнопка "Add Question" нажата');
-        startNewQuestion();
-    });
-
-    // 3. Обработчик на кнопку "Cancel"
-    cancelBtn?.addEventListener('click', cancelNewQuestion);
-
-    // 4. Обработчик на кнопку "Save"
-    saveBtn?.addEventListener('click', function () {
-        const templateId = saveBtn.dataset.templateId;
-        console.log('Сохранение вопроса с templateId', templateId);
-        if (!templateId) {
-            alert('Отсутствует ID шаблона!');
-            return;
-        }
-        saveNewQuestion(templateId);
-    });
-
-    // Функция для начала добавления нового вопроса
-    function startNewQuestion() {
-        console.log('Показ формы для нового вопроса');
-        formWrapper.classList.remove('d-none');  // Показываем форму
-        addBtn.classList.add('d-none');  // Скрываем кнопку "Add"
-        clearFields();
-    }
-
-    // Функция отмены создания нового вопроса
-    function cancelNewQuestion() {
-        console.log('Отмена создания нового вопроса');
-        formWrapper.classList.add('d-none');  // Скрываем форму
-        addBtn.classList.remove('d-none');  // Показываем кнопку "Add"
-        clearFields();
-    }
-
-    // Очистка всех полей формы
+    // ——— Helpers ———
     function clearFields() {
-        console.log('Очистка полей формы');
         document.getElementById('new-text').value = '';
-        document.getElementById('new-type').value = '0'; // Значение по умолчанию для SingleChoice
+        document.getElementById('new-type').value = questionType.SingleChoice;
         document.getElementById('new-mandatory').checked = false;
         document.getElementById('options-list').innerHTML = '';
         document.getElementById('rating-min').value = '';
         document.getElementById('rating-max').value = '';
+        hiddenId.value = '';
         toggleNewOptions();
     }
 
-    // Функция для отображения опций на основе типа вопроса
-    function toggleNewOptions() {
-        const typeValue = document.getElementById('new-type').value;
-        const optionsContainer = document.getElementById('options-container');
-        const ratingContainer = document.getElementById('rating-range-container');
-
-        const needsOptions = typeValue === '0' || typeValue === '1'; // SingleChoice или MultipleChoice
-        const needsRating = typeValue === '3'; // Rating
-
-        optionsContainer.style.display = needsOptions ? 'block' : 'none';
-        ratingContainer.style.display = needsRating ? 'block' : 'none';
-
-        if (needsOptions && !document.querySelector('#options-list .option-input-group')) {
-            addOption(); // Добавляем первую опцию, если необходимо
-        }
-    }
-
-    window.toggleNewOptions = toggleNewOptions;
-
-    // Функция добавления новой опции
     function addOption(value = '') {
-        const optionsList = document.getElementById('options-list');
+        const list = document.getElementById('options-list');
         const group = document.createElement('div');
         group.className = 'option-input-group';
 
         const icon = document.createElement('span');
         icon.className = 'option-icon';
-        icon.innerHTML = '&#9633;'; // Стандартный символ для опции
+        const t = String(document.getElementById('new-type').value);
+        icon.innerHTML = (t === '0' ? '&#9675;' : '&#9633;');
 
         const input = document.createElement('input');
         input.type = 'text';
         input.className = 'form-control';
         input.value = value;
 
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.innerHTML = '&times;';
-        removeBtn.onclick = () => group.remove();
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = '×';
+        btn.onclick = () => group.remove();
 
-        group.append(icon, input, removeBtn);
-        optionsList.appendChild(group);
+        group.append(icon, input, btn);
+        list.appendChild(group);
     }
 
-    window.addOption = addOption;
+    function toggleNewOptions() {
+        const t = String(document.getElementById('new-type').value);
+        const needsOpts = (t === '0' || t === '1');
+        const needsRate = (t === '3');
+        document.getElementById('options-container').style.display = needsOpts ? 'block' : 'none';
+        document.getElementById('rating-range-container').style.display = needsRate ? 'block' : 'none';
 
-    async function saveNewQuestion(templateId) {
+        if (needsOpts && !document.querySelector('#options-list .option-input-group')) {
+            addOption();
+        }
+        // update each icon
+        document.querySelectorAll('#options-list .option-icon').forEach(el => {
+            el.innerHTML = (t === '0' ? '&#9675;' : '&#9633;');
+        });
+    }
+
+    async function saveQuestion() {
         const text = document.getElementById('new-text').value.trim();
-        const type = parseInt(document.getElementById('new-type').value);
-        const isMandatory = document.getElementById('new-mandatory').checked;
-
         if (!text) {
-            alert('Question text is required');
+            await Swal.fire({ icon: 'warning', title: 'Missing text', text: 'Please enter a question.' });
             return;
         }
 
-        let options = [];
+        const type = +document.getElementById('new-type').value;
+        const isMand = document.getElementById('new-mandatory').checked;
+        let opts = [];
+
         if (type === questionType.SingleChoice || type === questionType.MultipleChoice) {
-            const inputs = document.querySelectorAll('#options-list input');
-            options = Array.from(inputs)
-                .map(input => input.value.trim())
-                .filter(value => value);
-            if (options.length === 0) {
-                alert('Please add at least one option.');
+            opts = Array.from(document.querySelectorAll('#options-list input'))
+                .map(i => i.value.trim()).filter(v => v);
+            if (!opts.length) {
+                await Swal.fire({ icon: 'warning', title: 'No options', text: 'Add at least one option.' });
                 return;
             }
         }
 
         const payload = {
-            text: text,
-            type: type,
-            isMandatory: isMandatory,
-            options: options.join(','),
-            templateFormId: templateId
+            id: hiddenId.value ? +hiddenId.value : undefined,
+            text,
+            type,
+            isMandatory: isMand,
+            options: opts.join(','),
+            templateFormId: +saveBtn.dataset.templateId
         };
 
-        try {
-            const res = await fetch('/api/template/question/add', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(payload)
-            });
+        const url = payload.id
+            ? '/api/template/question/edit'
+            : '/api/template/question/add';
 
-            if (res.ok) {
-                location.reload();
-            } else {
-                const err = await res.text();
-                alert(`Could not add question:\n${err}`);
-            }
-        } catch (error) {
-            alert('An error occurred while adding the question.');
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            return location.reload();
         }
+        const err = await res.text();
+        await Swal.fire({ icon: 'error', title: 'Save failed', text: err });
     }
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    const deleteButtons = document.querySelectorAll('.delete-btn');
+    function startNewQuestion() {
+        formWrapper.classList.remove('d-none');
+        addBtn.classList.add('d-none');
+        clearFields();
+    }
 
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', async () => {
-            const questionId = button.getAttribute('data-id');
+    // helper to reposition the single form under any element
+    function moveFormAfter(element) {
+        element.parentNode.insertBefore(formWrapper, element.nextElementSibling);
+        }
 
-            const confirmed = await Swal.fire({
+    // ——— Wire UI ———
+    formWrapper.classList.add('d-none');
+
+    // — Add‑question button ——
+    addBtn.addEventListener('click', () => {
+        moveFormAfter(addBtn.closest('.col-12'));
+        startNewQuestion();
+    });
+    cancelBtn?.addEventListener('click', () => {
+        formWrapper.classList.add('d-none');
+        addBtn.classList.remove('d-none');
+        clearFields();
+        if (currentEditingCard) {
+            currentEditingCard.classList.remove('d-none');
+            currentEditingCard = null;
+        }
+    });
+    saveBtn.addEventListener('click', saveQuestion);
+    document.getElementById('new-type')
+        .addEventListener('change', toggleNewOptions);
+
+    // ——— Delete ———
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            const c = await Swal.fire({
                 icon: 'warning',
-                title: 'Are you sure?',
-                text: `Are you sure you want to delete this question?`,
+                title: 'Delete?',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
+                confirmButtonText: 'Yes'
             });
+            if (!c.isConfirmed) return;
+            const r = await fetch(`/api/template/question/delete/${encodeURIComponent(id)}`, { method: 'DELETE' });
+            if (r.ok) location.reload();
+            else Swal.fire('Error', 'Could not delete', 'error');
+        });
+    });
 
-            if (confirmed.isConfirmed) {
-                try {
-                    const response = await fetch(`/api/template/question/delete/${encodeURIComponent(questionId)}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    });
+    // ——— Edit ———
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            try {
+                const cardContainer = btn.closest('.col-12');
+                currentEditingCard = cardContainer;
+                cardContainer.classList.add('d-none');
+                const r = await fetch(`/api/template/question/${id}`, { credentials: 'same-origin' });
+                const txt = await r.text();
+                console.log('RAW!', r.status, txt);
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                const data = JSON.parse(txt);
 
-                    if (response.ok) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Deleted!',
-                            text: `Successfully deleted question with ID: ${questionId}`,
-                        }).then(() => location.reload());
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Failed to delete',
-                            text: 'An error occurred while deleting the question.',
-                        });
-                    }
-                } catch (error) {
-                    console.error(error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'An error occurred',
-                        text: 'Failed to delete the question due to an error.',
-                    });
+                // exactly the same show flow as Add
+                // move form right under this specific question card
+                moveFormAfter(cardContainer);
+                startNewQuestion();
+
+                // fill form
+                document.getElementById('new-text').value = data.text;
+                document.getElementById('new-type').value = data.type;
+                document.getElementById('new-mandatory').checked = data.isMandatory;
+                hiddenId.value = data.id;
+
+                toggleNewOptions();
+
+                // repopulate opts or rating
+                const list = document.getElementById('options-list');
+                list.innerHTML = '';
+                if (data.type === questionType.SingleChoice || data.type === questionType.MultipleChoice) {
+                    (data.options || '').split(',').forEach(o => addOption(o.trim()));
                 }
+                if (data.type === questionType.Rating && data.options?.includes('-')) {
+                    const [min, max] = data.options.split('-').map(n => n.trim());
+                    document.getElementById('rating-min').value = min;
+                    document.getElementById('rating-max').value = max;
+                }
+            }
+            catch (e) {
+                console.error('Load question failed', e);
+                await Swal.fire('Error', 'Could not load question', 'error');
             }
         });
     });
+    window.addOption = addOption;
 });

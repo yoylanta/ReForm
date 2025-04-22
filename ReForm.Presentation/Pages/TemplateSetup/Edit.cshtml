@@ -35,7 +35,7 @@
                     <!-- Edit/Delete icons (hidden by default) -->
                     <div class="icons-container ">
                         <button type="button"
-                                class="btn btn-sm btn-warning edit-btn"
+                                class="btn btn-sm btn-outline-primary edit-btn"
                                 data-id="@q.Id">
                             ✎
                         </button>
@@ -112,7 +112,8 @@
         </div>
 
         <!-- Hidden new question form container -->
-        <div id="new-question-form-wrapper" class="col-12">
+        <div id="new-question-form-wrapper" class="col-12 d-none">
+            <input type="hidden" id="question-id" value="" />
             <div id="new-question-form" class="card p-4">
                 <div class="mb-3">
                     <label for="new-text" class="form-label">
@@ -122,7 +123,6 @@
                            class="form-control"
                            id="new-text"/>
                 </div>
-
                 <div class="mb-3">
                     <label for="new-type" class="form-label">
                         Question Type
