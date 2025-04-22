@@ -1,5 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReForm.Presentation", "ReForm.Presentation\ReForm.Presentation.csproj", "{E98D5D37-6BEE-4455-985C-DABD9F4D8922}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReForm.Infrastructure", "ReForm.Infrastructure\ReForm.Infrastructure.csproj", "{1D93EF1D-1055-4C1C-8C84-D00D0FB056BC}"
@@ -24,5 +27,8 @@ Global
 		{F409E335-304B-4A9D-960E-CBB6FB5C21C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F409E335-304B-4A9D-960E-CBB6FB5C21C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F409E335-304B-4A9D-960E-CBB6FB5C21C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

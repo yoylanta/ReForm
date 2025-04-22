@@ -16,5 +16,5 @@ public class FilledQuestion
 
     public FilledForm FilledForm { get; set; } = null!;
     public TemplateQuestion TemplateQuestion { get; set; } = null!;
-    public ICollection<Answer> Answers { get; set; } = [];
+    public ICollection<Answer> Answers { get; set; } = new List<Answer>();
 }
