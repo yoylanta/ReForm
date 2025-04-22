@@ -60,4 +60,9 @@ public class EntityRepository<T>(ApplicationDbContext context) : IEntityReposito
     {
         await context.SaveChangesAsync();
     }
+
+    public IQueryable<T> AsQueryable()
+    {
+        return _dbSet.AsQueryable();
+    }
 }

@@ -5,11 +5,12 @@ using ReForm.Core.Models.Submissions;
 
 namespace ReForm.Infrastructure.Services
 {
-    public class FilledFormService (IEntityRepository<FilledForm> filledFormRepository,
+    public class FilledFormService(
+        IEntityRepository<FilledForm> filledFormRepository,
         IEntityRepository<FilledQuestion> filledQuestion,
         IEntityRepository<Answer> answer) : IFilledFormService
     {
-         public async Task SaveFilledFormAsync(FilledFormDto filledFormDto)
+        public async Task SaveFilledFormAsync(FilledFormDto filledFormDto)
         {
             var filledForm = new FilledForm
             {
@@ -19,8 +20,8 @@ namespace ReForm.Infrastructure.Services
                     TemplateQuestionId = q.TemplateQuestionId,
                     Answers = q.Answers.Select(a => new Answer
                     {
-                        Response = a.Response, 
-                        UserId = a.UserId,  
+                        Response = a.Response,
+                        UserId = a.UserId,
                     }).ToList()
                 }).ToList()
             };
@@ -42,12 +43,12 @@ namespace ReForm.Infrastructure.Services
         }
         public async Task<FilledFormDto?> GetFilledFormByIdAsync(int filledFormId)
         {
-            var form = await filledFormRepository
-                .FirstOrDefaultAsyncWithIncludes(
-                    f => f.Id == filledFormId,
-                    f => f.Questions,
-                    q => q.Answers
-                );
+            var query = filledFormRepository.AsQueryable()
+                .Where(f => f.Id == filledFormId)
+                .Include(f => f.Questions)
+                .ThenInclude(q => q.Answers);
+
+            var form = await query.SingleOrDefaultAsync();
 
             return form == null ? null : new FilledFormDto(form);
         }
