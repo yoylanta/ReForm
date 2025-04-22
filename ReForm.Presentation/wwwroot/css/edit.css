@@ -5,6 +5,9 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     color: #333;
     font-family: 'Segoe UI', sans-serif;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    position: relative;
 }
 
 .bg-question-MultipleChoice {
@@ -31,6 +34,8 @@
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 5px;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .question-meta {
@@ -41,16 +46,63 @@
 
 .options-list-display {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
 }
 
 .option-pill {
-    background-color: #fff;
+    display: flex;
+    align-items: center;
     padding: 6px 12px;
+    background-color: #f1f1f1;
     border-radius: 20px;
-    border: 1px solid #ccc;
-    font-size: 13px;
+    font-size: 0.95rem;
+}
+
+.option-pill .option-icon {
+    margin-right: 8px;
+    font-size: 1rem;
+}
+
+.option-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.option-icon {
+    font-size: 20px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    line-height: 1;
+}
+
+
+.option-input-group input {
+    flex-grow: 1;
+}
+
+.option-input-group button {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+}
+
+.option-input-group button:hover {
+    color: red;
+    transition: 0.2s;
+}
+
+.option-input-group .form-control {
+    flex-grow: 1;
 }
 
 .rating-stars {
@@ -63,4 +115,97 @@ input[type="text"], input[type="date"] {
     border: 1px solid #ccc;
     border-radius: 6px;
     width: 250px;
+}
+
+#questions-list {
+    position: relative;
+}
+
+#add-btn {
+    width: 70px;
+    height: 70px;
+    font-size: 36px;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-stars {
+    font-size: 1.2rem;
+    color: gold;
+}
+
+.icons-container {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+    display: none;
+    gap: 0.5em;
+    z-index: 1;
+}
+
+/* Show the icons container when the parent is hovered */
+.question-card:hover .icons-container {
+    width: 5em;
+    display: flex !important;
+}
+
+.edit-btn {
+    height: 2em;
+    margin-bottom: 0.5em;
+    font-size: 20px;
+    outline: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 4px;
+    margin-right: 5px;
+    background-color: #e9ecef; /* Light gray background */
+    color: #343a40; /* Dark gray text */
+    border: 1px solid #dee2e6; /* Gray border */
+}
+
+.edit-btn:hover,
+.edit-btn:focus {
+    background-color: #ced4da; /* Slightly darker gray on hover/focus */
+    color: #fff; /* White text on hover/focus */
+    border-color: #adb5bd; /* Slightly lighter gray border on hover/focus */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Delete button styles */
+.delete-btn {
+    height: 2em;
+    padding: 8px 12px;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 4px;
+    margin-right: 5px; /* Space between buttons */
+    background-color: #e9ecef; /* Light gray background */
+    color: #dc3545; /* Dark red text */
+    border: 1px solid #dc3545; /* Red border */
+}
+
+.delete-btn:hover,
+.delete-btn:focus {
+    background-color: #ff6347; /* Tomato red on hover/focus */
+    color: #fff; /* White text on hover/focus */
+    border-color: #c12e2a; /* Darker red border on hover/focus */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Show the icons container when the parent is hovered */
+.question-card:hover .icons-container {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Add some margin to the question card to avoid overlapping */
+.question-card {
+    position: relative;
+    margin-bottom: 20px; /* Optional: Add space between cards */
+    overflow: hidden; /* Ensure content doesn't overflow */
 }

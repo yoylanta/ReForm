@@ -1,3 +1,4 @@
+﻿// edit.js
 const questionType = {
     SingleChoice: 0,
     MultipleChoice: 1,
@@ -6,112 +7,205 @@ const questionType = {
     Date: 4
 };
 
-function startNewQuestion() {
-    document.getElementById("add-question-card").classList.add("d-none");
-    document.getElementById("new-question-form").classList.remove("d-none");
+document.addEventListener('DOMContentLoaded', () => {
+    const addBtn = document.getElementById('add-btn');
+    const formWrapper = document.getElementById('new-question-form-wrapper');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const saveBtn = document.getElementById('save-btn');
+    const hiddenId = document.getElementById('question-id');
+    let currentEditingCard = null;
 
-    clearFields();
-}
-
-function cancelNewQuestion() {
-    document.getElementById("add-question-card").classList.remove("d-none");
-    document.getElementById("new-question-form").classList.add("d-none");
-
-    clearFields();
-}
-
-function clearFields() {
-    document.getElementById('new-text').value = '';
-    document.getElementById('new-type').value = questionType.SingleChoice;
-    document.getElementById('new-mandatory').checked = false;
-    document.getElementById('options-list').innerHTML = '';
-    toggleNewOptions();
-}
-
-function toggleNewOptions() {
-    const typeValue = parseInt(document.getElementById("new-type").value);
-    const optionsContainer = document.getElementById("options-container");
-    const needsOptions = typeValue === questionType.SingleChoice || typeValue === questionType.MultipleChoice;
-
-    optionsContainer.style.display = needsOptions ? 'block' : 'none';
-
-    if (needsOptions && document.getElementById('options-list').children.length === 0) {
-        addOption();
-    }
-}
-
-function addOption(value = '') {
-    const typeValue = parseInt(document.getElementById("new-type").value);
-    const optionsList = document.getElementById('options-list');
-
-    const optionGroup = document.createElement('div');
-    optionGroup.className = 'option-input-group';
-
-    const icon = document.createElement('span');
-    icon.className = 'option-icon';
-    icon.innerHTML = typeValue === questionType.SingleChoice ? '&#9675;' : '&#9633;';
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'form-control';
-    input.value = value;
-
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.innerHTML = '&times;';
-    removeBtn.onclick = () => optionGroup.remove();
-
-    optionGroup.appendChild(icon);
-    optionGroup.appendChild(input);
-    optionGroup.appendChild(removeBtn);
-
-    optionsList.appendChild(optionGroup);
-}
-
-async function saveNewQuestion(templateId) {
-    const text = document.getElementById('new-text').value.trim();
-    const type = parseInt(document.getElementById('new-type').value);
-    const isMandatory = document.getElementById('new-mandatory').checked;
-
-    if (!text) {
-        alert('Question text is required');
-        return;
+    // ——— Helpers ———
+    function clearFields() {
+        document.getElementById('new-text').value = '';
+        document.getElementById('new-type').value = questionType.SingleChoice;
+        document.getElementById('new-mandatory').checked = false;
+        document.getElementById('options-list').innerHTML = '';
+        document.getElementById('rating-min').value = '';
+        document.getElementById('rating-max').value = '';
+        hiddenId.value = '';
+        toggleNewOptions();
     }
 
-    let options = [];
-    if (type === questionType.SingleChoice || type === questionType.MultipleChoice) {
-        const inputs = document.querySelectorAll('#options-list input');
-        options = Array.from(inputs)
-            .map(input => input.value.trim())
-            .filter(value => value);
-        if (options.length === 0) {
-            alert('Please add at least one option.');
+    function addOption(value = '') {
+        const list = document.getElementById('options-list');
+        const group = document.createElement('div');
+        group.className = 'option-input-group';
+
+        const icon = document.createElement('span');
+        icon.className = 'option-icon';
+        const t = String(document.getElementById('new-type').value);
+        icon.innerHTML = (t === '0' ? '&#9675;' : '&#9633;');
+
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'form-control';
+        input.value = value;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.innerHTML = '×';
+        btn.onclick = () => group.remove();
+
+        group.append(icon, input, btn);
+        list.appendChild(group);
+    }
+
+    function toggleNewOptions() {
+        const t = String(document.getElementById('new-type').value);
+        const needsOpts = (t === '0' || t === '1');
+        const needsRate = (t === '3');
+        document.getElementById('options-container').style.display = needsOpts ? 'block' : 'none';
+        document.getElementById('rating-range-container').style.display = needsRate ? 'block' : 'none';
+
+        if (needsOpts && !document.querySelector('#options-list .option-input-group')) {
+            addOption();
+        }
+        // update each icon
+        document.querySelectorAll('#options-list .option-icon').forEach(el => {
+            el.innerHTML = (t === '0' ? '&#9675;' : '&#9633;');
+        });
+    }
+
+    async function saveQuestion() {
+        const text = document.getElementById('new-text').value.trim();
+        if (!text) {
+            await Swal.fire({ icon: 'warning', title: 'Missing text', text: 'Please enter a question.' });
             return;
         }
-    }
 
-    const payload = {
-        text: text,
-        type: type,
-        isMandatory: isMandatory,
-        options: options.join(','),
-        templateFormId: templateId
-    };
+        const type = +document.getElementById('new-type').value;
+        const isMand = document.getElementById('new-mandatory').checked;
+        let opts = [];
 
-    try {
-        const res = await fetch('/api/template/question/add', {
+        if (type === questionType.SingleChoice || type === questionType.MultipleChoice) {
+            opts = Array.from(document.querySelectorAll('#options-list input'))
+                .map(i => i.value.trim()).filter(v => v);
+            if (!opts.length) {
+                await Swal.fire({ icon: 'warning', title: 'No options', text: 'Add at least one option.' });
+                return;
+            }
+        }
+
+        const payload = {
+            id: hiddenId.value ? +hiddenId.value : undefined,
+            text,
+            type,
+            isMandatory: isMand,
+            options: opts.join(','),
+            templateFormId: +saveBtn.dataset.templateId
+        };
+
+        const url = payload.id
+            ? '/api/template/question/edit'
+            : '/api/template/question/add';
+
+        const res = await fetch(url, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
         if (res.ok) {
-            location.reload();
-        } else {
-            const err = await res.text();
-            alert(`Could not add question:\n${err}`);
+            return location.reload();
         }
-    } catch (error) {
-        alert('An error occurred while adding the question.');
+        const err = await res.text();
+        await Swal.fire({ icon: 'error', title: 'Save failed', text: err });
     }
-}
+
+    function startNewQuestion() {
+        formWrapper.classList.remove('d-none');
+        addBtn.classList.add('d-none');
+        clearFields();
+    }
+
+    // helper to reposition the single form under any element
+    function moveFormAfter(element) {
+        element.parentNode.insertBefore(formWrapper, element.nextElementSibling);
+        }
+
+    // ——— Wire UI ———
+    formWrapper.classList.add('d-none');
+
+    // — Add‑question button ——
+    addBtn.addEventListener('click', () => {
+        moveFormAfter(addBtn.closest('.col-12'));
+        startNewQuestion();
+    });
+    cancelBtn?.addEventListener('click', () => {
+        formWrapper.classList.add('d-none');
+        addBtn.classList.remove('d-none');
+        clearFields();
+        if (currentEditingCard) {
+            currentEditingCard.classList.remove('d-none');
+            currentEditingCard = null;
+        }
+    });
+    saveBtn.addEventListener('click', saveQuestion);
+    document.getElementById('new-type')
+        .addEventListener('change', toggleNewOptions);
+
+    // ——— Delete ———
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            const c = await Swal.fire({
+                icon: 'warning',
+                title: 'Delete?',
+                showCancelButton: true,
+                confirmButtonText: 'Yes'
+            });
+            if (!c.isConfirmed) return;
+            const r = await fetch(`/api/template/question/delete/${encodeURIComponent(id)}`, { method: 'DELETE' });
+            if (r.ok) location.reload();
+            else Swal.fire('Error', 'Could not delete', 'error');
+        });
+    });
+
+    // ——— Edit ———
+    document.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const id = btn.dataset.id;
+            try {
+                const cardContainer = btn.closest('.col-12');
+                currentEditingCard = cardContainer;
+                cardContainer.classList.add('d-none');
+                const r = await fetch(`/api/template/question/${id}`, { credentials: 'same-origin' });
+                const txt = await r.text();
+                console.log('RAW!', r.status, txt);
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                const data = JSON.parse(txt);
+
+                // exactly the same show flow as Add
+                // move form right under this specific question card
+                moveFormAfter(cardContainer);
+                startNewQuestion();
+
+                // fill form
+                document.getElementById('new-text').value = data.text;
+                document.getElementById('new-type').value = data.type;
+                document.getElementById('new-mandatory').checked = data.isMandatory;
+                hiddenId.value = data.id;
+
+                toggleNewOptions();
+
+                // repopulate opts or rating
+                const list = document.getElementById('options-list');
+                list.innerHTML = '';
+                if (data.type === questionType.SingleChoice || data.type === questionType.MultipleChoice) {
+                    (data.options || '').split(',').forEach(o => addOption(o.trim()));
+                }
+                if (data.type === questionType.Rating && data.options?.includes('-')) {
+                    const [min, max] = data.options.split('-').map(n => n.trim());
+                    document.getElementById('rating-min').value = min;
+                    document.getElementById('rating-max').value = max;
+                }
+            }
+            catch (e) {
+                console.error('Load question failed', e);
+                await Swal.fire('Error', 'Could not load question', 'error');
+            }
+        });
+    });
+    window.addOption = addOption;
+});

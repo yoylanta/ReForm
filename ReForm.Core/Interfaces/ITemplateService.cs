@@ -15,4 +15,9 @@ public interface ITemplateService
 
     Task DeleteTemplatesAsync(List<int> templateIds, int userId);
 
+    Task<TemplateQuestionDto?> GetQuestionAsync(int questionId);
+
+    Task<bool> EditQuestionAsync(TemplateQuestionDto questionDto);
+
+    Task<bool> DeleteQuestionAsync(int questionId);
 }

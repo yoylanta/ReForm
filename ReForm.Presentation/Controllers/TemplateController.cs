@@ -67,6 +67,55 @@ public class TemplatesController(
         return Ok();
     }
 
+    [HttpGet("question/{id}")]
+    public async Task<IActionResult> GetQuestion(int id)
+    {
+        var question = await templateService.GetQuestionAsync(id);
+        if (question == null) return NotFound();
+        return Ok(question);
+    }
+
+    [HttpPost("question/edit")]
+    public async Task<IActionResult> EditQuestion([FromBody] TemplateQuestionDto editQuestionDto)
+    {
+        if (string.IsNullOrWhiteSpace(editQuestionDto.Text))
+            return BadRequest("New text for the question cannot be empty.");
+
+        try
+        {
+            var result = await templateService.EditQuestionAsync(editQuestionDto);
+            if (result)
+            {
+                return Ok();
+            }
+            return BadRequest("Unable to edit question.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
+
+    [HttpDelete("question/delete/{questionId}")]
+    [IgnoreAntiforgeryToken]
+    public async Task<IActionResult> DeleteQuestion([FromRoute] int questionId)
+    {
+        try
+        {
+            var result = await templateService.DeleteQuestionAsync(questionId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest("Unable to delete question.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
+
 }
 
 public class DeleteTemplatesRequest
