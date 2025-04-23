@@ -39,6 +39,8 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
     .AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+
 
 var app = builder.Build();
 

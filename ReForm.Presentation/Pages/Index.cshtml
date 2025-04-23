@@ -1,13 +1,30 @@
-@page
+﻿@page
 @model ReForm.Presentation.Pages.Index
 
 @{
     ViewData["Title"] = "My Templates";
 }
 @await Html.PartialAsync("_CreateTemplateModal")
+
 <link rel="stylesheet" href="~/css/homepage.css"/>
 <script src="~/lib/micromodal/dist/micromodal.min.js"></script>
 <script src="~/js/homepage.js" defer></script>
+
+
+<!-- ← New nav bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="/">My Templates</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/respond">Respond</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!-- end nav -->
 
 <div class="template-container">
     <div class="header">

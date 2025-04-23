@@ -1,0 +1,21 @@
+﻿.question-card {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 1rem;
+    position: relative;
+    background: #fafafa;
+}
+
+    .question-card .question-meta {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0.75rem;
+    }
+
+.response-container {
+    margin-top: 0.5rem;
+}
+
+#submit-btn {
+    min-width: 120px;
+}

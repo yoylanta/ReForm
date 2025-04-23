@@ -1,4 +1,61 @@
-﻿@page
+﻿@page 
 @model ReForm.Presentation.Pages.Respond.RespondModel
+@using ReForm.Core.Models.Enums
+@inject Microsoft.AspNetCore.Identity.UserManager<ReForm.Core.Models.Identity.User> _userManager
+
 @{
+    var currentUserId = User.Identity.IsAuthenticated
+        ? int.Parse(_userManager.GetUserId(User))
+        : 0;
 }
+
+<link rel="stylesheet" href="~/css/homepage.css" />
+<link rel="stylesheet" href="~/css/respond.css" />
+<div id="respond-page"
+     data-template-id="@Model.Template.Id"
+     data-user-id="@currentUserId">
+<div class="template-container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Fill out: @Model.Template.Title</h1>
+    </div>
+
+    <div id="questions-list" class="row gx-3 gy-4">
+        @foreach (var q in Model.Template.Questions)
+        {
+            var bgClass = q.Type switch
+            {
+                QuestionTypeEnum.SingleChoice => "bg-question-SingleChoice",
+                QuestionTypeEnum.MultipleChoice => "bg-question-MultipleChoice",
+                QuestionTypeEnum.Text => "bg-question-Text",
+                QuestionTypeEnum.Rating => "bg-question-Rating",
+                QuestionTypeEnum.Date => "bg-question-Date",
+                _ => ""
+            };
+            <div class="col-12">
+                <div class="question-card @bgClass" data-id="@q.Id" data-type="@((int)q.Type)" data-options="@q.Options">
+                    <h5>
+                        @q.Text
+                        @if (q.IsMandatory)
+                        {
+                            <span class="text-danger">*</span>
+                        }
+                    </h5>
+                    <div class="question-meta">
+                        @q.Type.ToString()
+                    </div>
+                    <div class="response-container">
+                        @* placeholder: inputs will be injected by respond.js *@
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <button id="submit-btn" class="btn btn-success">Submit</button>
+    </div>
+</div>
+</div>
+
+
+<script src="~/js/respond.js" defer></script>

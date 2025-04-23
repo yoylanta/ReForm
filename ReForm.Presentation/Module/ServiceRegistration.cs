@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
 using ReForm.Core.Models.Templates;
+using ReForm.Core.Models.Submissions;
 using ReForm.Infrastructure.Repositories;
 using ReForm.Infrastructure.Services;
 
@@ -17,5 +18,9 @@ public static class ServiceRegistration
         services.AddScoped<IEntityRepository<TemplateQuestion>, EntityRepository<TemplateQuestion>>();
         services.AddScoped<ITemplateService, TemplateService>();
         services.AddTransient<IUserValidator<User>, CustomUserValidator>();
+        services.AddScoped<IEntityRepository<FilledForm>, EntityRepository<FilledForm>>();
+        services.AddScoped<IEntityRepository<FilledQuestion>, EntityRepository<FilledQuestion>>();
+        services.AddScoped<IEntityRepository<Answer>, EntityRepository<Answer>>();
+        services.AddScoped<IFilledFormService, FilledFormService>();
     }
 }
