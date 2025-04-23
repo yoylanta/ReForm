@@ -87,6 +87,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        if (type === questionType.Rating) {
+            const min = parseInt(document.getElementById('rating-min').value, 10);
+            const max = parseInt(document.getElementById('rating-max').value, 10);
+            if (isNaN(min) || isNaN(max) || min >= max || min == 0) {
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Invalid range',
+                    text: 'Please provide a valid rating range (e.g., 1–5 or 1–10).'
+                });
+                return;
+            }
+            opts = [`${min}-${max}`];
+        }
+
         const payload = {
             id: hiddenId.value ? +hiddenId.value : undefined,
             text,

@@ -17,10 +17,6 @@ public class SubmissionController(IFilledFormService filledFormService) : Contro
     {
         try
         {
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdString, out var userId))
-                return BadRequest("Cannot determine current user ID");
-            dto.UserId = userId;
             await filledFormService.SaveFilledFormAsync(dto);
             return Ok();
         }

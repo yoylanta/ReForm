@@ -3,7 +3,7 @@
 @using ReForm.Core.DTOs
 
 @{
-    ViewData["Title"] = "Fill Out a Template";
+    ViewData["Title"] = "Available Forms";
 }
 
 <link rel="stylesheet" href="~/css/homepage.css" />
@@ -11,7 +11,7 @@
 
 <div class="template-container">
     <div class="header mb-3">
-        <h1>Choose a Form to Fill</h1>
+        <h1>Submit a form</h1>
     </div>
     <div class="template-grid">
         @foreach (var form in Model.AvailableTemplates)

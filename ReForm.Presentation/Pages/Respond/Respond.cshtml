@@ -4,6 +4,7 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<ReForm.Core.Models.Identity.User> _userManager
 
 @{
+    ViewData["Title"] = "Submit a form";
     var currentUserId = User.Identity.IsAuthenticated
         ? int.Parse(_userManager.GetUserId(User))
         : 0;
@@ -11,12 +12,14 @@
 
 <link rel="stylesheet" href="~/css/homepage.css" />
 <link rel="stylesheet" href="~/css/respond.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
 <div id="respond-page"
      data-template-id="@Model.Template.Id"
      data-user-id="@currentUserId">
 <div class="template-container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Fill out: @Model.Template.Title</h1>
+        <h1 class="h3 mb-0">Submit a form: @Model.Template.Title</h1>
     </div>
 
     <div id="questions-list" class="row gx-3 gy-4">
@@ -57,5 +60,5 @@
 </div>
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="~/js/respond.js" defer></script>
