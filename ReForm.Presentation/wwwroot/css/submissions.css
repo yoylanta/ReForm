@@ -1,0 +1,88 @@
+﻿.submissions-container {
+    margin: 40px auto;
+    max-width: 1000px;
+}
+
+.submissions-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.no-submissions {
+    color: #888;
+    font-style: italic;
+}
+
+.submissions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+    .submissions-table th,
+    .submissions-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .submissions-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .submissions-table tr:last-child td {
+        border-bottom: none;
+    }
+
+.submission-row {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+    .submission-row:hover {
+        background-color: #f1f3f5;
+        transform: translateY(-3px); /* Slight lift on hover */
+    }
+
+    .submission-row .action-cell {
+        visibility: hidden; /* Initially hide the button */
+        text-align: center;
+    }
+
+    .submission-row:hover .action-cell {
+        visibility: visible; /* Show on hover */
+    }
+
+.view-btn {
+    padding: 0.6rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+    opacity: 0.7;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+    .view-btn:hover {
+        background-color: #0056b3;
+        opacity: 1;
+    }
+
+    .view-btn .fa-eye {
+        font-size: 1.4rem;
+    }
+
+.submissions-table td {
+    position: relative;
+}

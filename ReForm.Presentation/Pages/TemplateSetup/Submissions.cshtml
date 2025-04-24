@@ -1,0 +1,47 @@
+﻿@page
+@model ReForm.Presentation.Pages.TemplateSetup.SubmissionsModel
+
+@{
+    ViewData["Title"] = $"Submissions for {Model.Template.Title}";
+}
+
+<link rel="stylesheet" href="~/css/submissions.css" />
+<script src="~/js/submissions.js" defer></script>
+
+<div class="submissions-container">
+    <h2 class="submissions-title">Submissions for: @Model.Template.Title</h2>
+
+    @if (Model.Submissions.Count == 0)
+    {
+        <p class="no-submissions">No submissions yet. Check back later!</p>
+    }
+    else
+    {
+        <table class="submissions-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Submitted By</th>
+                    <th scope="col">Submitted At</th>
+                    <th scope="col"></th> <!-- Empty column for "eye" button -->
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Submissions.Count; i++)
+                {
+                    var form = Model.Submissions[i];
+                    <tr class="submission-row" data-form-id="@form.TemplateFormId">
+                        <td>@(i + 1)</td>
+                        <td>@(Model.UsersById.ContainsKey(form.UserId) ? Model.UsersById[form.UserId].Name : "Unknown")</td>
+                        <td>@form.SubmittedAt.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</td>
+                        <td class="action-cell">
+                            <a href="/Submissions/View?id=@form.TemplateFormId" class="view-btn" aria-label="View Submission">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

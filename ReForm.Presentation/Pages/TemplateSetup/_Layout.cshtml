@@ -9,6 +9,17 @@
 }
 
 <div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link @(ViewData["ActiveTab"]?.ToString() == "Edit" ? "active" : "")"
+               asp-page="/TemplateSetup/Edit" asp-route-id="@Model.Template.Id">Edit</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewData["ActiveTab"]?.ToString() == "Submissions" ? "active" : "")"
+               asp-page="/TemplateSetup/Submissions" asp-route-id="@Model.Template.Id">Submissions</a>
+        </li>
+    </ul>
+
     <main role="main" class="pb-3">
         @RenderBody()
     </main>

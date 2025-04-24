@@ -46,4 +46,10 @@ public class UserService(IEntityRepository<User> userRepository) : IUserService
         userRepository.RemoveRange(users);
         await userRepository.SaveChangesAsync();
     }
+
+    public async Task<UserDto?> GetByIdAsync(int id)
+    {
+        var user = await userRepository.GetByIdAsync(id);
+        return user != null ? new UserDto(user) : null;
+    }
 }

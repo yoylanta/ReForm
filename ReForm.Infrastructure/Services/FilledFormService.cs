@@ -29,6 +29,7 @@ namespace ReForm.Infrastructure.Services
                     Title = template.Title,
                     TemplateFormId = filledFormDto.TemplateFormId,
                     UserId = filledFormDto.UserId,
+                    SubmittedAt = DateTimeOffset.UtcNow,
                     Questions = new List<FilledQuestion>()
                 };
 
@@ -75,7 +76,8 @@ namespace ReForm.Infrastructure.Services
 
             var formsWithIncludes = forms.AsQueryable()
                 .Include(f => f.Questions)
-                .ThenInclude(q => q.Answers);
+                .ThenInclude(q => q.Answers)
+                        .Include(f => f.User);
 
             return formsWithIncludes.Select(f => new FilledFormDto(f)).ToList();
         }
