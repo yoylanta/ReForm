@@ -2,11 +2,10 @@ let editMode = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     MicroModal.init();
-
-    // Setup template card click handlers
+    document.getElementById('template-title').setAttribute('autocomplete', 'off');
     document.querySelectorAll(".template-card").forEach(card => {
         card.addEventListener("click", (e) => {
-            if (editMode) return; // Block navigation in edit mode
+            if (editMode) return; 
             if (e.target.type === "checkbox") return;
 
             const templateId = card.dataset.templateId;
@@ -23,7 +22,7 @@ async function saveTemplate() {
     const title = document.getElementById('template-title').value;
 
     if (!title.trim()) {
-        alert("Title cannot be empty");
+        Swal.fire('Oops!', 'Title cannot be empty', 'warning');
         return;
     }
 
@@ -45,7 +44,7 @@ async function saveTemplate() {
         }
     } catch (err) {
         console.error(err);
-        alert("Error occurred while saving template.");
+        Swal.fire('Failed to save template', error, 'error');
     }
 }
 
@@ -96,7 +95,6 @@ async function deleteSelectedTemplates() {
         });
 
         if (response.ok) {
-            // Reload to reflect changes
             location.reload();
         } else {
             const error = await response.text();

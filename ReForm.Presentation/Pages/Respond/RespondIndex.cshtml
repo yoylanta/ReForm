@@ -1,0 +1,25 @@
+﻿@page "/respond"
+@model ReForm.Presentation.Pages.Respond.RespondIndexModel
+@using ReForm.Core.DTOs
+
+@{
+    ViewData["Title"] = "Available Forms";
+}
+
+<link rel="stylesheet" href="~/css/homepage.css" />
+<script src="~/js/respondIndex.js" defer></script>
+
+<div class="template-container">
+    <div class="header mb-3">
+        <h1>Submit a form</h1>
+    </div>
+    <div class="template-grid">
+        @foreach (var form in Model.AvailableTemplates)
+        {
+            <div class="template-card" data-template-id="@form.Id">
+                <h3>@form.Title</h3>
+                <p>ID: @form.Id</p>
+            </div>
+        }
+    </div>
+</div>

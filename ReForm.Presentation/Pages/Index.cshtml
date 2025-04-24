@@ -1,10 +1,11 @@
-@page
+﻿@page
 @model ReForm.Presentation.Pages.Index
 
 @{
     ViewData["Title"] = "My Templates";
 }
 @await Html.PartialAsync("_CreateTemplateModal")
+
 <link rel="stylesheet" href="~/css/homepage.css"/>
 <script src="~/lib/micromodal/dist/micromodal.min.js"></script>
 <script src="~/js/homepage.js" defer></script>

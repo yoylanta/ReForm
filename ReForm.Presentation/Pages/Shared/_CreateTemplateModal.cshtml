@@ -2,16 +2,28 @@
 <div class="modal micromodal-slide" id="create-template-modal" aria-hidden="true">
     <div class="modal__overlay" tabindex="-1" data-micromodal-close>
         <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <header class="modal__header">
+            <header class="modal__header d-flex justify-content-between align-items-center">
                 <h2 class="modal__title" id="modal-title">Create New Template</h2>
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close></button>
+                <button class="btn-close" aria-label="Close modal" data-micromodal-close></button>
             </header>
-            <main class="modal__content" id="modal-content">
-                <input type="text" id="template-title" placeholder="Enter template title" class="modal-input"/>
+
+            <main class="modal__content mt-3" id="modal-content">
+                <input type="text"
+                       id="template-title"
+                       placeholder="Enter template title"
+                       class="form-control form-control-lg" />
             </main>
-            <footer class="modal__footer">
-                <button class="modal__btn modal__btn-primary" onclick="saveTemplate()">Save</button>
-                <button class="modal__btn" data-micromodal-close aria-label="Close this dialog window">Cancel</button>
+
+            <footer class="modal__footer mt-4 d-flex justify-content-end gap-2">
+                <button class="btn btn-danger"
+                        data-micromodal-close
+                        aria-label="Close this dialog window">
+                    Cancel
+                </button>
+                <button class="btn btn-primary"
+                        onclick="saveTemplate()">
+                    Save
+                </button>
             </footer>
         </div>
     </div>
