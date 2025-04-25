@@ -5,6 +5,7 @@ using ReForm.Core.Models.Templates;
 using ReForm.Core.Models.Submissions;
 using ReForm.Infrastructure.Repositories;
 using ReForm.Infrastructure.Services;
+using ReForm.Core.Models.Metadata;
 
 namespace ReForm.Presentation.Module;
 
@@ -22,5 +23,8 @@ public static class ServiceRegistration
         services.AddScoped<IEntityRepository<FilledQuestion>, EntityRepository<FilledQuestion>>();
         services.AddScoped<IEntityRepository<Answer>, EntityRepository<Answer>>();
         services.AddScoped<IFilledFormService, FilledFormService>();
+        services.AddScoped<IEntityRepository<Tag>, EntityRepository<Tag>>();
+        services.AddScoped<IEntityRepository<Topic>, EntityRepository<Topic>>();
+        services.AddScoped<ITopicService, TopicService>();
     }
 }

@@ -23,7 +23,6 @@
                     <th scope="col">#</th>
                     <th scope="col">Submitted By</th>
                     <th scope="col">Submitted At</th>
-                    <th scope="col"></th> <!-- Empty column for "eye" button -->
                 </tr>
             </thead>
             <tbody>
@@ -34,11 +33,6 @@
                         <td>@(i + 1)</td>
                         <td>@(Model.UsersById.ContainsKey(form.UserId) ? Model.UsersById[form.UserId].Name : "Unknown")</td>
                         <td>@form.SubmittedAt.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</td>
-                        <td class="action-cell">
-                            <a href="/Submissions/View?id=@form.TemplateFormId" class="view-btn" aria-label="View Submission">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                        </td>
                     </tr>
                 }
             </tbody>

@@ -56,6 +56,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             entity.HasMany(t => t.FilledForms)
                 .WithOne(f => f.TemplateForm)
                 .HasForeignKey(f => f.TemplateFormId);
+
+            entity.HasMany(t => t.Tags)
+                .WithMany(t => t.TemplateForms)
+                .UsingEntity(j => j.ToTable("TemplateFormTags"));
         });
 
         // TemplateQuestion

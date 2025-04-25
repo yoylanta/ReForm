@@ -1,11 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
+using ReForm.Core.Models.Metadata;
 using ReForm.Core.Models.Templates;
 
 namespace ReForm.Infrastructure.Services;
 
-public class TemplateService(IEntityRepository<TemplateForm> repository, IEntityRepository<TemplateQuestion> questionRepository) : ITemplateService
+public class TemplateService(IEntityRepository<TemplateForm> repository, IEntityRepository<TemplateQuestion> questionRepository,
+     IEntityRepository<Topic> topicRepository) : ITemplateService
 {
     public async Task<IEnumerable<TemplateForm>> GetByUserIdAsync(int userId)
     {
@@ -18,6 +20,8 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
         {
             Title = templateDto.Title,
             UserId = templateDto.UserId,
+            Description = templateDto.Description,
+            IsPublic = templateDto.IsPublic
         };
 
         await repository.AddAsync(templateForm);
@@ -92,4 +96,48 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
         return true;
     }
 
+    public async Task<bool> UpdateTemplateFormAsync(TemplateFormDto templateDto)
+    {
+        var templateForm = await repository.FirstOrDefaultAsync(t => t.Id == templateDto.Id);
+
+        if (templateForm == null) return false;
+
+        templateForm.Title = templateDto.Title;
+        templateForm.Description = templateDto.Description;
+
+        if (string.IsNullOrWhiteSpace(templateDto.TopicName))
+        {
+            return false;
+        }
+
+        var existingTopic = await topicRepository.FirstOrDefaultAsync(t => t.Name == templateDto.TopicName);
+        if (existingTopic == null)
+        {
+            var newTopic = new Topic { Name = templateDto.TopicName };
+            await topicRepository.AddAsync(newTopic);
+            await topicRepository.SaveChangesAsync();
+
+            templateForm.Topic = newTopic;
+        }
+        else
+        {
+            templateForm.Topic = existingTopic;
+        }
+        templateForm.ImageUrl = templateDto.ImageUrl;
+        templateForm.IsPublic = templateDto.IsPublic;
+
+        repository.Update(templateForm);
+        await repository.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<TemplateForm?> GetTemplateFormByIdAsync(int id)
+    {
+        return await repository.GetByIdAsync(id);
+    }
+
+    public async Task<IEnumerable<Topic>> GetAllTopicsAsync()
+    {
+        return await topicRepository.GetAllAsync();
+    }
 }

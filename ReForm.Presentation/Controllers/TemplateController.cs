@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
+using ReForm.Core.Models.Metadata;
+using ReForm.Infrastructure.Services;
 
 namespace ReForm.Presentation.Controllers;
 
@@ -12,7 +14,7 @@ namespace ReForm.Presentation.Controllers;
 [Authorize]
 public class TemplatesController(
     ITemplateService templateService,
-    UserManager<User> userManager) : ControllerBase
+    UserManager<User> userManager, ITopicService topicService) : ControllerBase
 {
     [HttpPost]
     [IgnoreAntiforgeryToken]
@@ -28,7 +30,9 @@ public class TemplatesController(
             var newTemplate = await templateService.CreateAsync(new TemplateFormDto
             {
                 Title = dto.Title,
-                UserId = userId
+                UserId = userId,
+                Description = dto.Description,
+                IsPublic = dto.IsPublic
             });
             return Ok(newTemplate);
         }
@@ -36,6 +40,53 @@ public class TemplatesController(
         {
             return BadRequest(ex.Message);
         }
+    }
+
+    [HttpPost("edit")]
+    [IgnoreAntiforgeryToken]
+    public async Task<IActionResult> EditTemplate([FromBody] TemplateFormDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Title))
+            return BadRequest(new { message = "Title cannot be empty" });
+
+        try
+        {
+            if (string.IsNullOrWhiteSpace(dto.TopicName))
+            {
+                return BadRequest(new { success = false, message = "Topic name is required." });
+            }
+
+            var userId = int.Parse(userManager.GetUserId(User!));
+
+            var result = await templateService.UpdateTemplateFormAsync(dto);
+
+            if (result)
+            {
+                return Ok(new { success = true });
+            }
+
+            return BadRequest(new { success = false, message = "Unable to update template." });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, message = $"Error: {ex.Message}" });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateTemplateForm([FromBody] TemplateFormDto templateDto)
+    {
+        if (string.IsNullOrWhiteSpace(templateDto.TopicName))
+        {
+            return BadRequest(new { success = false, message = "Topic name is required." });
+        }
+
+        var success = await templateService.UpdateTemplateFormAsync(templateDto);
+
+        if (!success)
+            return BadRequest(new { success = false, message = "Failed to update the template." });
+
+        return Ok(new { success = true, message = "Template updated successfully." });
     }
 
     [HttpPost("delete")]
@@ -114,6 +165,39 @@ public class TemplatesController(
             return BadRequest($"Error: {ex.Message}");
         }
     }
+
+    [HttpPost("topic/add")]
+    public async Task<IActionResult> AddTopic([FromBody] string topicName)
+    {
+        if (string.IsNullOrWhiteSpace(topicName))
+            return BadRequest("Topic name cannot be empty");
+
+        var newTopic = await topicService.AddTopicAsync(topicName);
+        return CreatedAtAction(nameof(GetTopicById), new { id = newTopic.Id }, newTopic);
+    }
+
+    [HttpGet("topic/get-all")]
+    public async Task<IActionResult> GetTopics([FromQuery] string searchTerm = "")
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return BadRequest("Search term cannot be empty");
+        }
+
+        var topics = await topicService.SearchTopicsAsync(searchTerm);
+        return Ok(topics);
+    }
+
+    [HttpGet("topic/{id}")]
+    public async Task<IActionResult> GetTopicById(int id)
+    {
+        var topic = await topicService.GetTopicByIdAsync(id);
+        if (topic == null)
+            return NotFound("Topic not found");
+
+        return Ok(topic);
+    }
+
 
 }
 
