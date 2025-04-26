@@ -23,6 +23,26 @@
     </div>
 
     <div id="questions-list" class="row gx-3 gy-4">
+            <div class="form-details mb-4 p-3 border rounded bg-light">
+                <h4>Form Details</h4>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.Topic?.Name))
+                {
+                    <p><strong>Topic:</strong> @Model.Template.Topic!.Name</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.Description))
+                {
+                    <p><strong>Description:</strong> @Model.Template.Description</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.ImageUrl))
+                {
+                    <div class="mb-2">
+                        <img src="@Model.Template.ImageUrl" alt="Form image" class="img-fluid rounded" style="max-height: 300px;" />
+                    </div>
+                }
+            </div>
         @foreach (var q in Model.Template.Questions)
         {
             var bgClass = q.Type switch

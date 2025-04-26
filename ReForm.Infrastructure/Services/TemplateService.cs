@@ -16,12 +16,26 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
 
     public async Task<TemplateForm> CreateAsync(TemplateFormDto templateDto)
     {
+        Topic? topic = null;
+
+        if (!string.IsNullOrWhiteSpace(templateDto.TopicName))
+        {
+            topic = await topicRepository.FirstOrDefaultAsync(t => t.Name == templateDto.TopicName);
+            if (topic == null)
+            {
+                topic = new Topic { Name = templateDto.TopicName };
+                await topicRepository.AddAsync(topic);
+                await topicRepository.SaveChangesAsync();
+            }
+        }
+
         var templateForm = new TemplateForm()
         {
             Title = templateDto.Title,
             UserId = templateDto.UserId,
             Description = templateDto.Description,
-            IsPublic = templateDto.IsPublic
+            IsPublic = templateDto.IsPublic,
+            Topic = topic
         };
 
         await repository.AddAsync(templateForm);
@@ -29,6 +43,7 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
 
         return templateForm;
     }
+
 
     public async Task AddQuestionAsync(TemplateQuestionDto questionDto)
     {
@@ -49,7 +64,8 @@ public class TemplateService(IEntityRepository<TemplateForm> repository, IEntity
     {
         var templateForm = await repository.FirstOrDefaultAsyncWithIncludes(
         p => p.Id == id,
-        p => p.Questions
+        p => p.Questions,
+        p => p.Topic
         );
 
         return templateForm;

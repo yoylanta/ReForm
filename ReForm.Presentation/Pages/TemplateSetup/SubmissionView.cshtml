@@ -1,0 +1,33 @@
+﻿@page
+@model ReForm.Presentation.Pages.TemplateSetup.SubmissionViewModel
+
+@{
+    ViewData["Title"] = $"Submission View for {Model.Template.Title}";
+}
+
+<link rel="stylesheet" href="~/css/submission-view.css" />
+
+<div class="submission-container">
+    <h2 class="submission-title">@Model.FilledForm.Title</h2>
+
+    <div class="submission-meta">
+        <p><strong>Submitted by:</strong> @(Model.UserName ?? "Unknown User")</p>
+        <p><strong>Email:</strong> @(Model.UserEmail ?? "Unknown Email")</p>
+        <p><strong>Submitted at:</strong> @Model.FilledForm.SubmittedAt.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</p>
+    </div>
+
+    <div class="questions-list">
+        @foreach (var question in Model.FilledForm.Questions)
+        {
+            <div class="question-block">
+                <p class="question-text"><strong>Q:</strong> @question.Text</p>
+                <ul class="answer-list">
+                    @foreach (var answer in question.Answers)
+                    {
+                        <li class="answer-item">@answer.Response</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</div>

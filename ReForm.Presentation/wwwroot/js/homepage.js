@@ -37,7 +37,7 @@ async function saveTemplate() {
 
         if (response.ok) {
             const newTemplate = await response.json();
-            window.location.href = `/TemplateSetup/Edit?id=${newTemplate.id}`;
+            window.location.href = `/TemplateSetup/GeneralSettings?id=${templateId}`;
         } else {
             const error = await response.text();
             alert("Failed to save template: " + error);

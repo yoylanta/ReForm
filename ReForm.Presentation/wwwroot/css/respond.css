@@ -4,6 +4,9 @@
     padding: 1rem;
     position: relative;
     background: #fafafa;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
     .question-card .question-meta {
@@ -60,3 +63,19 @@
 .flatpickr-calendar {
     z-index: 9999;
 }
+
+.form-details {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}
+
+    .form-details img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .form-details h4 {
+        margin-bottom: 1rem;
+    }

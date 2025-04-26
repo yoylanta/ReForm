@@ -157,6 +157,8 @@
                     templateQuestionId: qid,
                     text: card.querySelector('h5')?.innerText || '',
                     options: (type === 0 || type === 1 || type === 3) ? options.join(';') : '',
+                    type: type,
+                    isMandatory: isMandatory,
                     answers: answers.map(v => ({
                         response: v,
                         userId: userId

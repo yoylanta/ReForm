@@ -29,7 +29,7 @@
                 @for (int i = 0; i < Model.Submissions.Count; i++)
                 {
                     var form = Model.Submissions[i];
-                    <tr class="submission-row" data-form-id="@form.TemplateFormId">
+                    <tr class="submission-row" data-form-id="@form.Id">
                         <td>@(i + 1)</td>
                         <td>@(Model.UsersById.ContainsKey(form.UserId) ? Model.UsersById[form.UserId].Name : "Unknown")</td>
                         <td>@form.SubmittedAt.ToLocalTime().ToString("dd-MM-yyyy HH:mm")</td>

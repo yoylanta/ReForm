@@ -51,11 +51,6 @@ public class TemplatesController(
 
         try
         {
-            if (string.IsNullOrWhiteSpace(dto.TopicName))
-            {
-                return BadRequest(new { success = false, message = "Topic name is required." });
-            }
-
             var userId = int.Parse(userManager.GetUserId(User!));
 
             var result = await templateService.UpdateTemplateFormAsync(dto);
@@ -72,15 +67,9 @@ public class TemplatesController(
             return BadRequest(new { success = false, message = $"Error: {ex.Message}" });
         }
     }
-
     [HttpPost]
     public async Task<IActionResult> UpdateTemplateForm([FromBody] TemplateFormDto templateDto)
     {
-        if (string.IsNullOrWhiteSpace(templateDto.TopicName))
-        {
-            return BadRequest(new { success = false, message = "Topic name is required." });
-        }
-
         var success = await templateService.UpdateTemplateFormAsync(templateDto);
 
         if (!success)
