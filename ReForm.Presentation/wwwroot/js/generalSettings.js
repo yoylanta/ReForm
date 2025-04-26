@@ -8,33 +8,37 @@
 
     const topicInput = document.getElementById("Topic");
     const form = document.querySelector('form');
-
-    // Get suggestions from DB when the user starts typing
     topicInput.addEventListener('input', async () => {
-        const searchTerm = topicInput.value;
-        if (searchTerm.length > 2) { // Trigger suggestions after 3 characters
-            try {
-                const response = await fetch(`/api/template/topic/get-all?searchTerm=${searchTerm}`);
-                const topics = await response.json();
+        const searchTerm = topicInput.value.trim();
+        const suggestionBox = document.getElementById("topic-suggestions");
 
-                // Clear previous suggestions
-                const suggestionBox = document.getElementById("topic-suggestions");
-                suggestionBox.innerHTML = '';
+        if (searchTerm.length === 0) {
+            suggestionBox.innerHTML = '';
+            return;
+        }
 
-                // Show new suggestions
-                topics.forEach(topic => {
-                    const suggestionItem = document.createElement("li");
-                    suggestionItem.textContent = topic.name;
-                    suggestionItem.classList.add('suggestion-item');
-                    suggestionItem.addEventListener('click', () => {
-                        topicInput.value = topic.name;
-                        suggestionBox.innerHTML = ''; // Clear suggestions
-                    });
-                    suggestionBox.appendChild(suggestionItem);
+        try {
+            const response = await fetch(`/api/template/topic/get-all?searchTerm=${encodeURIComponent(searchTerm)}`);
+            let topics = await response.json();
+
+            topics.sort((a, b) => a.name.localeCompare(b.name));
+
+            topics = topics.filter(topic => topic.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+            suggestionBox.innerHTML = '';
+
+            topics.forEach(topic => {
+                const suggestionItem = document.createElement("li");
+                suggestionItem.textContent = topic.name;
+                suggestionItem.classList.add('suggestion-item');
+                suggestionItem.addEventListener('click', () => {
+                    topicInput.value = topic.name;
+                    suggestionBox.innerHTML = '';
                 });
-            } catch (error) {
-                console.error("Error fetching suggestions:", error);
-            }
+                suggestionBox.appendChild(suggestionItem);
+            });
+        } catch (error) {
+            console.error("Error fetching suggestions:", error);
         }
     });
 
@@ -42,24 +46,18 @@
         event.preventDefault();
 
         const topicName = document.getElementById("Topic").value.trim();
-
         if (!topicName) {
-            alert("Topic name cannot be empty.");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Missing Topic',
+                text: 'Topic name cannot be empty.'
+            });
             return;
         }
 
-        // Check if topic exists in the database
         try {
-            const response = await fetch(`/api/template/topic/get-all?searchTerm=${topicName}`);
-            const existingTopics = await response.json();
-            const topicExists = existingTopics.some(topic => topic.name.toLowerCase() === topicName.toLowerCase());
-
-            if (topicExists) {
-                alert("Topic name already exists. Please choose a different one.");
-                return;
-            }
-
             const formData = {
+                Id: document.getElementById("TemplateId").value,
                 Title: document.getElementById("Title").value,
                 Description: document.getElementById("Description").value,
                 TopicName: topicName,
@@ -77,13 +75,30 @@
 
             const data = await postResponse.json();
             if (postResponse.ok) {
-                alert("Template updated successfully.");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Template updated successfully.'
+                });
             } else {
-                alert(`Error: ${data.message || "Unable to update template."}`);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || "Unable to update template."
+                });
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("There was an error updating the template.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an error updating the template.'
+            });
         }
+    });
+
+    form.setAttribute("autocomplete", "off");
+    document.querySelectorAll("input").forEach(input => {
+        input.setAttribute("autocomplete", "off");
     });
 });

@@ -66,3 +66,30 @@ input[type="checkbox"] {
     transform: scale(1.2);
     margin-right: 0.5rem;
 }
+
+#topic-suggestions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background: white;
+    z-index: 1000;
+    width: 100%;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+    .suggestion-item:hover {
+        background-color: #f0f0f0;
+    }
+
+.form-group {
+    position: relative;
+}

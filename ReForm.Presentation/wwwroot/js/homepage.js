@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (e.target.type === "checkbox") return;
 
             const templateId = card.dataset.templateId;
-            window.location.href = `/TemplateSetup/Edit?id=${templateId}`;
+            window.location.href = `/TemplateSetup/GeneralSettings?id=${templateId}`;
         });
     });
 });
