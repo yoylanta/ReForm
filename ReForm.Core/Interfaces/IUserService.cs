@@ -16,4 +16,8 @@ public interface IUserService
     Task DeleteUsersAsync(IEnumerable<int> userIds);
 
     Task<UserDto?> GetByEmailAsync(string email);
+
+    Task<List<UserDto>> SearchUsersAsync(string searchTerm);
+
+    Task ChangeUsersRole(IEnumerable<int> userIds);
 }

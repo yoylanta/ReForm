@@ -27,4 +27,6 @@ public interface ITemplateService
     Task<TemplateForm?> GetTemplateFormByIdAsync(int id);
 
     Task<IEnumerable<Topic>> GetAllTopicsAsync();
+
+    Task<IEnumerable<TemplateForm>> GetAvailableForms(int userId);
 }

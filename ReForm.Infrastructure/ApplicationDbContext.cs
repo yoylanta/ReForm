@@ -47,6 +47,26 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
                 .HasForeignKey(a => a.UserId);
         });
 
+        modelBuilder.Entity<TemplateForm>()
+            .HasMany(tf => tf.AllowedUsers)
+            .WithMany(u => u.AllowedForms)
+            .UsingEntity<Dictionary<string, object>>(
+            "TemplateFormAllowedUsers",
+            right => right
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey("UserId")
+                .OnDelete(DeleteBehavior.Cascade),
+            left => left
+                .HasOne<TemplateForm>()
+                .WithMany()
+                .HasForeignKey("TemplateFormId")
+                .OnDelete(DeleteBehavior.Cascade),
+            join => {
+                join.HasKey("TemplateFormId", "UserId");
+                join.ToTable("TemplateFormAllowedUsers");
+            });
+
         // TemplateForm
         modelBuilder.Entity<TemplateForm>(entity => {
             entity.HasMany(t => t.Questions)

@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const userCheckboxes = document.querySelectorAll(".user-checkbox");
     const blockButton = document.getElementById("blockUsers");
     const unblockButton = document.getElementById("unblockUsers");
+    const changeRolesButton = document.getElementById("changeRoles");
     const deleteButton = document.getElementById("deleteUsers");
     const filterInput = document.getElementById("filterInput");
 
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle blocking users
     blockButton.addEventListener("click", async () => {
         const selectedUsers = getSelectedUsers();
-        const { blocked, active } = getUserStatus(selectedUsers);
+        const {blocked, active} = getUserStatus(selectedUsers);
 
         let message = "";
 
@@ -45,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const response = await fetch('/api/user/block', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(active)
                 });
 
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 icon: 'info',
                 title: 'User Status Update',
                 html: message,
-                timer: 5000, 
+                timer: 5000,
                 timerProgressBar: true
             }).then(() => location.reload());
         }
@@ -78,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle unblocking users
     unblockButton.addEventListener("click", async () => {
         const selectedUsers = getSelectedUsers();
-        const { blocked, active } = getUserStatus(selectedUsers);
+        const {blocked, active} = getUserStatus(selectedUsers);
 
         let message = "";
 
@@ -90,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
             try {
                 const response = await fetch('/api/user/unblock', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(blocked)
                 });
 
@@ -116,6 +117,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 timer: 5000,
                 timerProgressBar: true
             }).then(() => location.reload());
+        }
+    });
+
+    changeRolesButton.addEventListener("click", async () => {
+        const selectedUsers = getSelectedUsers();
+        if (!selectedUsers.length) {
+            showError("No users selected.");
+            return;
+        }
+        try {
+            const response = await fetch('/api/user/change-role', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(selectedUsers)
+            });
+
+            if (!response.ok) {
+                showError('Failed to change roles.');
+                return;
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Roles Changed',
+                text: 'User roles were updated successfully.',
+                timer: 3000,
+                timerProgressBar: true
+            }).then(() => location.reload());
+
+        } catch (error) {
+            console.error(error);
+            showError('An error occurred while changing roles.');
         }
     });
 
@@ -194,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
             text: message,
         });
     }
+
     function getUserStatus(userIds) {
         const users = document.querySelectorAll("span.badge");
         const userStatus = {
@@ -233,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 row.addEventListener("mouseout", () => {
                     row.classList.remove("hovered");
                 });
-                row.classList.add("glowing"); 
+                row.classList.add("glowing");
             }
         });
     }

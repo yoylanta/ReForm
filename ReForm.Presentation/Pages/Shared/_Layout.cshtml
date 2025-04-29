@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - ReForm</title>
     <script type="importmap"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
@@ -35,22 +35,26 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Index" ? "active" : "")"
-                               asp-area="" asp-page="/Index">My Templates</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Respond/RespondIndex" ? "active" : "")"
-                               asp-area="" asp-page="/Respond/RespondIndex">Awaiting</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Index" ? "active" : "")"
+                           asp-area="" asp-page="/Index">My Templates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Respond/RespondIndex" ? "active" : "")"
+                           asp-area="" asp-page="/Respond/RespondIndex">Awaiting</a>
+                    </li>
+                    @* Show Admin Panel only if the user is an Admin *@
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class="nav-item">
                             <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Admin/Users/Index" ? "active" : "")"
                                asp-area="" asp-page="/Admin/Users/Index">Admin Panel</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Account/Logout" ? "active" : "")"
-                               asp-area="" asp-page="/Account/Logout">Logout</a>
-                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Account/Logout" ? "active" : "")"
+                           asp-area="" asp-page="/Account/Logout">Logout</a>
+                    </li>
                 </ul>
             </div>
             <div class="text-center">

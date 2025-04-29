@@ -1,18 +1,18 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
+using ReForm.Core.Models.Identity;
 using ReForm.Core.Models.Templates;
 
 namespace ReForm.Presentation.Pages.TemplateSetup
 {
-    public class SubmissionViewModel(ITemplateService templateService, IFilledFormService filledFormService, IUserService userService) : PageModel
+    public class SubmissionViewModel(ITemplateService templateService, IFilledFormService filledFormService, IUserService userService, UserManager<User> userManager) : TemplateSetupPageModelBase(templateService, userManager)
     {
 
         [BindProperty]
-        public FilledFormDto FilledForm { get; set; } = null!;
-
-        public TemplateForm Template { get; set; } = null!;
+        public required FilledFormDto FilledForm { get; set; }
 
         public string? UserName { get; set; }
 
@@ -25,9 +25,7 @@ namespace ReForm.Presentation.Pages.TemplateSetup
                 return NotFound();
 
             FilledForm = filledForm;
-
-            Template = await templateService.GetTemplateFormWithQuestionsAsync(FilledForm.TemplateFormId)
-                ?? throw new InvalidOperationException("Template not found.");
+            await InitializeAsync(filledForm.TemplateFormId);
 
             var user = await userService.GetByIdAsync(filledForm.UserId);
             if (user != null)

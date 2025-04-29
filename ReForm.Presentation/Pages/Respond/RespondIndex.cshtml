@@ -6,7 +6,7 @@
     ViewData["Title"] = "Available Forms";
 }
 
-<link rel="stylesheet" href="~/css/homepage.css" />
+<link rel="stylesheet" href="~/css/homepage.css"/>
 <script src="~/js/respondIndex.js" defer></script>
 
 <div class="template-container">
@@ -16,9 +16,36 @@
     <div class="template-grid">
         @foreach (var form in Model.AvailableTemplates)
         {
-            <div class="template-card" data-template-id="@form.Id">
+            string cssClass;
+            int userId = int.Parse(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "0");
+
+            if (form.UserId == userId)
+            {
+                cssClass = "owner";
+            }
+            else if (form.IsPublic)
+            {
+                cssClass = "public";
+            }
+            else if (User.IsInRole("Admin") && form.UserId != userId && !form.AllowedUserIds.Contains(userId))
+            {
+                cssClass = "admin-only";
+            }
+            else if (form.AllowedUserIds.Contains(userId))
+            {
+                cssClass = "allowed-user";
+            }
+            else
+            {
+                cssClass = "unknown";
+            }
+
+            <div class="template-card @cssClass" data-template-id="@form.Id">
                 <h3>@form.Title</h3>
-                <p>ID: @form.Id</p>
+                <div class="template-meta">
+                    <p>ID: @form.Id</p>
+                    <p>Public: @form.IsPublic</p>
+                </div>
             </div>
         }
     </div>
