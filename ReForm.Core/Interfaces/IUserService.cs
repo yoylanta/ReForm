@@ -6,6 +6,7 @@ namespace ReForm.Core.Interfaces;
 
 public interface IUserService
 {
+    Task<UserDto?> GetByIdAsync(int id);
     Task<List<UserDto>> GetAllUsersAsync();
 
     Task BlockUsersAsync(IEnumerable<int> userIds);

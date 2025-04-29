@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReForm.Infrastructure;
@@ -11,9 +12,11 @@ using ReForm.Infrastructure;
 namespace ReForm.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250425083255_AddTemplateFormGeneralSettingsFields")]
+    partial class AddTemplateFormGeneralSettingsFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,14 +57,14 @@ namespace ReForm.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "aa007c5a-7d70-4957-84b0-54b9fcffc02f",
+                            ConcurrencyStamp = "8859dc4a-8c0f-432e-a03c-a9129dd4c1d4",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "0a6ca66c-403e-4650-8daa-1bf69f860b82",
+                            ConcurrencyStamp = "3ff817ca-6962-4e57-bf5e-ad07acb4cee8",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -394,9 +397,6 @@ namespace ReForm.Infrastructure.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Title")
                         .IsRequired()

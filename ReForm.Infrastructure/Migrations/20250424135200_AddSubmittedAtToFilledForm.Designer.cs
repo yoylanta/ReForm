@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReForm.Infrastructure;
@@ -11,9 +12,11 @@ using ReForm.Infrastructure;
 namespace ReForm.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250424135200_AddSubmittedAtToFilledForm")]
+    partial class AddSubmittedAtToFilledForm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,14 +57,14 @@ namespace ReForm.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "aa007c5a-7d70-4957-84b0-54b9fcffc02f",
+                            ConcurrencyStamp = "9aeaa643-2ce3-46d3-a76f-f72cf7585a0e",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "0a6ca66c-403e-4650-8daa-1bf69f860b82",
+                            ConcurrencyStamp = "06da49de-6c91-4d41-9783-5e3156b74bee",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -253,40 +256,6 @@ namespace ReForm.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ReForm.Core.Models.Metadata.Tag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tag");
-                });
-
-            modelBuilder.Entity("ReForm.Core.Models.Metadata.Topic", b =>
-                {
-                    b.Property<int?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int?>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Topic");
-                });
-
             modelBuilder.Entity("ReForm.Core.Models.Submissions.Answer", b =>
                 {
                     b.Property<int>("Id")
@@ -389,28 +358,14 @@ namespace ReForm.Infrastructure.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsPublic")
-                        .HasColumnType("boolean");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int?>("TopicId")
-                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TopicId");
 
                     b.HasIndex("UserId");
 
@@ -447,21 +402,6 @@ namespace ReForm.Infrastructure.Migrations
                     b.HasIndex("TemplateFormId");
 
                     b.ToTable("TemplateQuestion");
-                });
-
-            modelBuilder.Entity("TagTemplateForm", b =>
-                {
-                    b.Property<int>("TagsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TemplateFormsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TagsId", "TemplateFormsId");
-
-                    b.HasIndex("TemplateFormsId");
-
-                    b.ToTable("TemplateFormTags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -574,17 +514,11 @@ namespace ReForm.Infrastructure.Migrations
 
             modelBuilder.Entity("ReForm.Core.Models.Templates.TemplateForm", b =>
                 {
-                    b.HasOne("ReForm.Core.Models.Metadata.Topic", "Topic")
-                        .WithMany("TemplateForms")
-                        .HasForeignKey("TopicId");
-
                     b.HasOne("ReForm.Core.Models.Identity.User", "User")
                         .WithMany("CreatedTemplates")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Topic");
 
                     b.Navigation("User");
                 });
@@ -600,21 +534,6 @@ namespace ReForm.Infrastructure.Migrations
                     b.Navigation("TemplateForm");
                 });
 
-            modelBuilder.Entity("TagTemplateForm", b =>
-                {
-                    b.HasOne("ReForm.Core.Models.Metadata.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ReForm.Core.Models.Templates.TemplateForm", null)
-                        .WithMany()
-                        .HasForeignKey("TemplateFormsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ReForm.Core.Models.Identity.User", b =>
                 {
                     b.Navigation("Answers");
@@ -622,11 +541,6 @@ namespace ReForm.Infrastructure.Migrations
                     b.Navigation("CreatedTemplates");
 
                     b.Navigation("FilledForms");
-                });
-
-            modelBuilder.Entity("ReForm.Core.Models.Metadata.Topic", b =>
-                {
-                    b.Navigation("TemplateForms");
                 });
 
             modelBuilder.Entity("ReForm.Core.Models.Submissions.FilledForm", b =>

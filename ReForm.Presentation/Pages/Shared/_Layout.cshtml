@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - ReForm</title>
     <script type="importmap"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link href="~/lib/sweetalert2/dist/css/sweetalert2.min.css" rel="stylesheet">
@@ -39,7 +41,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Respond/RespondIndex" ? "active" : "")"
-                               asp-area="" asp-page="/Respond/RespondIndex">Awaiting You</a>
+                               asp-area="" asp-page="/Respond/RespondIndex">Awaiting</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark @(ViewContext.RouteData.Values["page"]?.ToString() == "/Admin/Users/Index" ? "active" : "")"

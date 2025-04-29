@@ -1,4 +1,5 @@
 using ReForm.Core.DTOs;
+using ReForm.Core.Models.Metadata;
 using ReForm.Core.Models.Templates;
 
 namespace ReForm.Core.Interfaces;
@@ -20,4 +21,10 @@ public interface ITemplateService
     Task<bool> EditQuestionAsync(TemplateQuestionDto questionDto);
 
     Task<bool> DeleteQuestionAsync(int questionId);
+
+    Task<bool> UpdateTemplateFormAsync(TemplateFormDto templateDto);
+
+    Task<TemplateForm?> GetTemplateFormByIdAsync(int id);
+
+    Task<IEnumerable<Topic>> GetAllTopicsAsync();
 }

@@ -8,21 +8,15 @@ using ReForm.Core.Models.Templates;
 namespace ReForm.Presentation.Pages.Respond;
 
 [Authorize]
-public class RespondModel : PageModel
+public class RespondModel(ITemplateService templateService) : PageModel
 {
-    private readonly ITemplateService _templateService;
-
-    public RespondModel(ITemplateService templateService)
-    {
-        _templateService = templateService;
-    }
 
     [BindProperty]
     public TemplateForm Template { get; set; } = null!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
-        Template = await _templateService.GetTemplateFormWithQuestionsAsync(id);
+        Template = await templateService.GetTemplateFormWithQuestionsAsync(id);
         if (Template == null) return NotFound();
         return Page();
     }

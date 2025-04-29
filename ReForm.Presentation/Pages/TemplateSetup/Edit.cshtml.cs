@@ -20,6 +20,8 @@ public class EditModel(ITemplateService templateService) : PageModel
             return NotFound();
         }
 
+        ViewData["ActiveTab"] = "Edit";
+
         return Page();
     }
 }

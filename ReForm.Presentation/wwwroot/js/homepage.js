@@ -5,11 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('template-title').setAttribute('autocomplete', 'off');
     document.querySelectorAll(".template-card").forEach(card => {
         card.addEventListener("click", (e) => {
-            if (editMode) return; 
+            if (editMode) return;
             if (e.target.type === "checkbox") return;
 
             const templateId = card.dataset.templateId;
-            window.location.href = `/TemplateSetup/Edit?id=${templateId}`;
+            window.location.href = `/TemplateSetup/GeneralSettings?id=${templateId}`;
         });
     });
 });
@@ -37,7 +37,7 @@ async function saveTemplate() {
 
         if (response.ok) {
             const newTemplate = await response.json();
-            window.location.href = `/TemplateSetup/Edit?id=${newTemplate.id}`;
+            window.location.href = `/TemplateSetup/GeneralSettings?id=${newTemplate.id}`;
         } else {
             const error = await response.text();
             alert("Failed to save template: " + error);

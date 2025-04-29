@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @model ReForm.Presentation.Pages.Respond.RespondModel
 @using ReForm.Core.Models.Enums
 @inject Microsoft.AspNetCore.Identity.UserManager<ReForm.Core.Models.Identity.User> _userManager
@@ -10,54 +10,90 @@
         : 0;
 }
 
-<link rel="stylesheet" href="~/css/homepage.css" />
-<link rel="stylesheet" href="~/css/respond.css" />
+<link rel="stylesheet" href="~/css/homepage.css"/>
+<link rel="stylesheet" href="~/css/respond.css"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
 <div id="respond-page"
      data-template-id="@Model.Template.Id"
      data-user-id="@currentUserId">
-<div class="template-container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Submit a form: @Model.Template.Title</h1>
-    </div>
+    <div class="template-container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Submit a form: @Model.Template.Title</h1>
+        </div>
 
-    <div id="questions-list" class="row gx-3 gy-4">
-        @foreach (var q in Model.Template.Questions)
-        {
-            var bgClass = q.Type switch
-            {
-                QuestionTypeEnum.SingleChoice => "bg-question-SingleChoice",
-                QuestionTypeEnum.MultipleChoice => "bg-question-MultipleChoice",
-                QuestionTypeEnum.Text => "bg-question-Text",
-                QuestionTypeEnum.Rating => "bg-question-Rating",
-                QuestionTypeEnum.Date => "bg-question-Date",
-                _ => ""
-            };
-            <div class="col-12">
-                <div class="question-card @bgClass" data-id="@q.Id" data-type="@((int)q.Type)" data-options="@q.Options">
-                    <h5>
-                        @q.Text
-                        @if (q.IsMandatory)
+        <div id="questions-list" class="row gx-3 gy-4">
+            <div class="form-details mb-4 p-3 border rounded bg-light">
+                <h4>Form Details</h4>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.Topic?.Name))
+                {
+                    <p><strong>Topic:</strong> @Model.Template.Topic!.Name</p>
+                }
+
+                <p><strong>Tags:</strong>
+                    @if (Model.Template.Tags?.Any() == true)
+                    {
+                        @foreach (var tag in Model.Template.Tags.Select((t, i) => new { t.Name, Index = i }))
                         {
-                            <span class="text-danger">*</span>
+                            <span class="badge bg-secondary me-1">@tag.Name</span>
                         }
-                    </h5>
-                    <div class="question-meta">
-                        @q.Type.ToString()
+                    }
+                    else
+                    {
+                        <span class="text-muted">No tags</span>
+                    }
+                </p>
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.Description))
+                {
+                    <p><strong>Description:</strong> @Model.Template.Description</p>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Template.ImageUrl))
+                {
+                    <div class="mb-2">
+                        <img src="@Model.Template.ImageUrl" alt="Form image" class="img-fluid rounded"
+                             style="max-height: 300px;"/>
                     </div>
-                    <div class="response-container">
-                        @* placeholder: inputs will be injected by respond.js *@
+                }
+            </div>
+            @foreach (var q in Model.Template.Questions)
+            {
+                var bgClass = q.Type switch
+                {
+                    QuestionTypeEnum.SingleChoice => "bg-question-SingleChoice",
+                    QuestionTypeEnum.MultipleChoice => "bg-question-MultipleChoice",
+                    QuestionTypeEnum.Text => "bg-question-Text",
+                    QuestionTypeEnum.Rating => "bg-question-Rating",
+                    QuestionTypeEnum.Date => "bg-question-Date",
+                    _ => ""
+                };
+                <div class="col-12">
+                    <div class="question-card @bgClass" data-id="@q.Id" data-type="@((int)q.Type)"
+                         data-options="@q.Options">
+                        <h5>
+                            @q.Text
+                            @if (q.IsMandatory)
+                            {
+                                <span class="text-danger">*</span>
+                            }
+                        </h5>
+                        <div class="question-meta">
+                            @q.Type.ToString()
+                        </div>
+                        <div class="response-container">
+                            @* placeholder: inputs will be injected by respond.js *@
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
 
-    <div class="d-flex justify-content-center mt-4">
-        <button id="submit-btn" class="btn btn-success">Submit</button>
+        <div class="d-flex justify-content-center mt-4">
+            <button id="submit-btn" class="btn btn-success">Submit</button>
+        </div>
     </div>
-</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

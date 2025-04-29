@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
+using ReForm.Core.Models.Metadata;
+using ReForm.Infrastructure.Services;
 
 namespace ReForm.Presentation.Controllers;
 
@@ -12,7 +14,9 @@ namespace ReForm.Presentation.Controllers;
 [Authorize]
 public class TemplatesController(
     ITemplateService templateService,
-    UserManager<User> userManager) : ControllerBase
+    UserManager<User> userManager,
+    ITopicService topicService,
+    ITagService tagService) : ControllerBase
 {
     [HttpPost]
     [IgnoreAntiforgeryToken]
@@ -24,18 +28,50 @@ public class TemplatesController(
 
         try
         {
-            var userId = int.Parse(userManager.GetUserId(User!));
-            var newTemplate = await templateService.CreateAsync(new TemplateFormDto
-            {
-                Title = dto.Title,
-                UserId = userId
-            });
+            dto.UserId = int.Parse(userManager.GetUserId(User!));
+            var newTemplate = await templateService.CreateAsync(dto);
             return Ok(newTemplate);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
+    }
+
+    [HttpPost("edit")]
+    [IgnoreAntiforgeryToken]
+    public async Task<IActionResult> EditTemplate([FromBody] TemplateFormDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Title))
+            return BadRequest(new { message = "Title cannot be empty" });
+
+        try
+        {
+            var userId = int.Parse(userManager.GetUserId(User!));
+
+            var result = await templateService.UpdateTemplateFormAsync(dto);
+
+            if (result)
+            {
+                return Ok(new { success = true });
+            }
+
+            return BadRequest(new { success = false, message = "Unable to update template." });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, message = $"Error: {ex.Message}" });
+        }
+    }
+    [HttpPost]
+    public async Task<IActionResult> UpdateTemplateForm([FromBody] TemplateFormDto templateDto)
+    {
+        var success = await templateService.UpdateTemplateFormAsync(templateDto);
+
+        if (!success)
+            return BadRequest(new { success = false, message = "Failed to update the template." });
+
+        return Ok(new { success = true, message = "Template updated successfully." });
     }
 
     [HttpPost("delete")]
@@ -113,6 +149,59 @@ public class TemplatesController(
         {
             return BadRequest($"Error: {ex.Message}");
         }
+    }
+
+    [HttpPost("topic/add")]
+    public async Task<IActionResult> AddTopic([FromBody] string topicName)
+    {
+        if (string.IsNullOrWhiteSpace(topicName))
+            return BadRequest("Topic name cannot be empty");
+
+        var newTopic = await topicService.AddTopicAsync(topicName);
+        return CreatedAtAction(nameof(GetTopicById), new { id = newTopic.Id }, newTopic);
+    }
+
+    [HttpGet("topic/get-all")]
+    public async Task<IActionResult> GetTopics([FromQuery] string searchTerm = "")
+    {
+        if (string.IsNullOrWhiteSpace(searchTerm))
+        {
+            return BadRequest("Search term cannot be empty");
+        }
+
+        var topics = await topicService.SearchTopicsAsync(searchTerm);
+        return Ok(topics);
+    }
+
+    [HttpGet("topic/{id}")]
+    public async Task<IActionResult> GetTopicById(int id)
+    {
+        var topic = await topicService.GetTopicByIdAsync(id);
+        if (topic == null)
+            return NotFound("Topic not found");
+
+        return Ok(topic);
+    }
+
+    [HttpGet("tags")]
+    public async Task<IActionResult> Get([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            // no query → return all tag names
+            var all = await tagService.GetAllTagsAsync();
+            return Ok(all.Select(t => t.Name));
+        }
+
+        // prefix‐search via your service
+        var matches = await tagService.SearchTagsAsync(query);
+
+        // if you really want StartsWith rather than Contains, uncomment:
+        // matches = matches
+        //     .Where(t => t.Name.StartsWith(query, StringComparison.OrdinalIgnoreCase))
+        //     .ToList();
+
+        return Ok(matches.Select(t => t.Name));
     }
 
 }

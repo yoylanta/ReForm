@@ -1,0 +1,58 @@
+﻿@page
+@using ReForm.Core.Models.Templates
+@model ReForm.Presentation.Pages.TemplateSetup.GeneralSettingsModel
+
+@{
+    ViewData["ActiveTab"] = "GeneralSettings";
+}
+<link rel="stylesheet" href="~/lib/tagify/dist/css/tagify.css"/>
+<script src="~/lib/tagify/dist/js/tagify.js" defer></script>
+<link rel="stylesheet" href="~/css/generalSettings.css"/>
+<script src="~/js/generalSettings.js" defer></script>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
+        <h1 class="h3 mb-0">General Settings: @Model.Template.Title</h1>
+    </div>
+    <form method="post">
+        <input type="hidden" id="TemplateId" value="@Model.Template.Id"/>
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Template.Title" required/>
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <textarea class="form-control" id="Description" name="Description">@Model.Template.Description</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Topic">Topic</label>
+            <input type="text" id="Topic" class="form-control" name="Topic" placeholder="Enter topic name"
+                   value="@Model.Template.Topic?.Name"/>
+            <ul id="topic-suggestions" class="suggestions-list"></ul>
+        </div>
+
+        <div class="form-group">
+            <label for="Tags">Tags</label>
+            <input id="tags-input" name="tags" placeholder="start typing tags…" value="@Model.InitialTagNames"
+                   autofocus>
+        </div>
+
+        <div class="form-group">
+            <label for="IsPublic">Public</label>
+            <input type="checkbox" class="form-check-input" id="IsPublic" name="IsPublic"
+                   @(Model.Template.IsPublic ? "checked" : "")/>
+            <small class="form-text text-muted">Check if the template should be accessible to everyone.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="ImageUrl">Image URL</label>
+            <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" value="@Model.Template.ImageUrl"/>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
