@@ -8,6 +8,41 @@
 
     const topicInput = document.getElementById("Topic");
     const form = document.querySelector('form');
+
+    function debounce(fn, delay) {
+        let id;
+        return (...args) => {
+            clearTimeout(id);
+            id = setTimeout(() => fn.apply(this, args), delay);
+        }
+    }
+
+    // 3) Init Tagify
+    const input = document.getElementById('tags-input');
+    const tagify = new Tagify(input, {
+        keepInvalidTags: true,       // <-- won't auto-remove unknown tags
+        enforceWhitelist: false,     // <-- allow new tags
+        whitelist: [],               // <-- we'll fill dynamically
+        dropdown: {
+            enabled: 1,                // show suggestions after 1 char
+            position: 'text',
+            highlightFirst: true
+        }
+    });
+
+    // 4) As user types, fetch suggestions
+    tagify.on('input', debounce(e => {
+        const value = e.detail.value;
+        if (!value) return tagify.dropdown.hide();
+
+        fetch(`/api/template/tags?query=${encodeURIComponent(value)}`)
+            .then(res => res.json())
+            .then(list => {
+                tagify.settings.whitelist = list;
+                tagify.dropdown.show(value);
+            });
+    }, 300));
+
     topicInput.addEventListener('input', async () => {
         const searchTerm = topicInput.value.trim();
         const suggestionBox = document.getElementById("topic-suggestions");
@@ -55,6 +90,8 @@
             return;
         }
 
+        const tags = tagify.value.map(item => item.value);
+
         try {
             const formData = {
                 Id: document.getElementById("TemplateId").value,
@@ -62,7 +99,8 @@
                 Description: document.getElementById("Description").value,
                 TopicName: topicName,
                 IsPublic: document.getElementById("IsPublic").checked,
-                ImageUrl: document.getElementById("ImageUrl").value
+                ImageUrl: document.getElementById("ImageUrl").value,
+                Tags: tags
             };
 
             const postResponse = await fetch('/api/template/edit', {

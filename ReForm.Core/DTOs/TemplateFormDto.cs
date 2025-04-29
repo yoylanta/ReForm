@@ -13,7 +13,7 @@ public class TemplateFormDto
 
     public int UserId { get; set; }
 
-    public string TopicName { get; set; } = null!;
+    public string? TopicName { get; set; }
 
     public string? ImageUrl { get; set; }
 
@@ -33,5 +33,5 @@ public class TemplateFormDto
         IsPublic = templateForm.IsPublic;
     }
 
-    public TemplateFormDto() { }
+    public TemplateFormDto() {}
 }

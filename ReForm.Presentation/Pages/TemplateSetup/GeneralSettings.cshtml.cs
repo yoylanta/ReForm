@@ -19,12 +19,18 @@ namespace ReForm.Presentation.Pages.TemplateSetup
 
         [BindProperty]
         public TemplateForm Template { get; set; } = null!;
+
+        public string InitialTagNames { get; set; }
         public IEnumerable<Topic> Topics { get; set; } = new List<Topic>();
+
+        [BindProperty]
+        public string TagNames { get; set; } = "";
 
         public async Task OnGetAsync(int id)
         {
             Template = await _templateService.GetTemplateFormByIdAsync(id);
             Topics = await _templateService.GetAllTopicsAsync();
+            InitialTagNames = string.Join(",", Template.Tags.Select(t => t.Name).ToArray());
         }
 
         public async Task<IActionResult> OnPostAsync(int id)
@@ -51,7 +57,14 @@ namespace ReForm.Presentation.Pages.TemplateSetup
                 IsPublic = Template.IsPublic,
                 UserId = Template.UserId,
                 ImageUrl = Template.ImageUrl,
-                TopicName = Template.Topic?.Name ?? ""
+                TopicName = Template.Topic?.Name ?? "",
+                Tags = TagNames
+                    .Split(',',
+                    System.StringSplitOptions
+                        .RemoveEmptyEntries |
+                    System.StringSplitOptions
+                        .TrimEntries)
+                    .ToList()
             };
 
             var result = await _templateService.UpdateTemplateFormAsync(templateDto);

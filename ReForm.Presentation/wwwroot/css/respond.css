@@ -9,11 +9,11 @@
     white-space: normal;
 }
 
-    .question-card .question-meta {
-        font-size: 0.9rem;
-        color: #666;
-        margin-bottom: 0.75rem;
-    }
+.question-card .question-meta {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
 
 .response-container {
     margin-top: 0.5rem;
@@ -35,9 +35,9 @@
     transition: color 0.2s;
 }
 
-    .star.selected {
-        color: gold;
-    }
+.star.selected {
+    color: gold;
+}
 
 .star-rating .star {
     font-size: 1.5rem;
@@ -45,20 +45,21 @@
     cursor: pointer;
 }
 
-    .star-rating .star.selected {
-        color: gold;
-    }
+.star-rating .star.selected {
+    color: gold;
+}
 
 .custom-datepicker {
     position: relative;
     font-size: 1.1rem;
     padding: 0.5rem 1rem;
 }
-    .custom-datepicker::-webkit-calendar-picker-indicator {
-        position: relative;
-        z-index: 2;
-        cursor: pointer;
-    }
+
+.custom-datepicker::-webkit-calendar-picker-indicator {
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
 
 .flatpickr-calendar {
     z-index: 9999;
@@ -71,11 +72,17 @@
     padding: 1rem;
 }
 
-    .form-details img {
-        max-width: 100%;
-        height: auto;
-    }
+.form-details img {
+    max-width: 100%;
+    height: auto;
+}
 
-    .form-details h4 {
-        margin-bottom: 1rem;
-    }
+.form-details h4 {
+    margin-bottom: 1rem;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.6em;
+    border-radius: 0.5rem;
+}

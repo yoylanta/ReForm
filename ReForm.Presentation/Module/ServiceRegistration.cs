@@ -26,5 +26,6 @@ public static class ServiceRegistration
         services.AddScoped<IEntityRepository<Tag>, EntityRepository<Tag>>();
         services.AddScoped<IEntityRepository<Topic>, EntityRepository<Topic>>();
         services.AddScoped<ITopicService, TopicService>();
+        services.AddScoped<ITagService, TagService>();
     }
 }

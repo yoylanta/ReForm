@@ -1,7 +1,7 @@
 ﻿/* Reset spacing */
 .container {
     margin: auto;
-    margin-bottom:auto;
+    margin-bottom: auto;
 }
 
 h2 {
@@ -32,10 +32,10 @@ label {
     transition: all 0.2s ease-in-out;
 }
 
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-    }
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
 
 textarea.form-control {
     min-height: 120px;
@@ -52,10 +52,10 @@ textarea.form-control {
     transition: all 0.2s ease;
 }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-        box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
-    }
+.btn-primary:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 8px rgba(0, 123, 255, 0.3);
+}
 
 .form-text.text-muted {
     font-size: 0.875rem;
@@ -86,10 +86,14 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-    .suggestion-item:hover {
-        background-color: #f0f0f0;
-    }
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
 
 .form-group {
     position: relative;
+}
+
+.tagify {
+    width: 100%;
 }

@@ -14,7 +14,9 @@ namespace ReForm.Presentation.Controllers;
 [Authorize]
 public class TemplatesController(
     ITemplateService templateService,
-    UserManager<User> userManager, ITopicService topicService) : ControllerBase
+    UserManager<User> userManager,
+    ITopicService topicService,
+    ITagService tagService) : ControllerBase
 {
     [HttpPost]
     [IgnoreAntiforgeryToken]
@@ -26,14 +28,8 @@ public class TemplatesController(
 
         try
         {
-            var userId = int.Parse(userManager.GetUserId(User!));
-            var newTemplate = await templateService.CreateAsync(new TemplateFormDto
-            {
-                Title = dto.Title,
-                UserId = userId,
-                Description = dto.Description,
-                IsPublic = dto.IsPublic
-            });
+            dto.UserId = int.Parse(userManager.GetUserId(User!));
+            var newTemplate = await templateService.CreateAsync(dto);
             return Ok(newTemplate);
         }
         catch (Exception ex)
@@ -187,6 +183,26 @@ public class TemplatesController(
         return Ok(topic);
     }
 
+    [HttpGet("tags")]
+    public async Task<IActionResult> Get([FromQuery] string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            // no query → return all tag names
+            var all = await tagService.GetAllTagsAsync();
+            return Ok(all.Select(t => t.Name));
+        }
+
+        // prefix‐search via your service
+        var matches = await tagService.SearchTagsAsync(query);
+
+        // if you really want StartsWith rather than Contains, uncomment:
+        // matches = matches
+        //     .Where(t => t.Name.StartsWith(query, StringComparison.OrdinalIgnoreCase))
+        //     .ToList();
+
+        return Ok(matches.Select(t => t.Name));
+    }
 
 }
 
