@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using ReForm.Core.Interfaces;
+using ReForm.Core.Models.Enums;
 using ReForm.Core.Models.Identity;
 
 namespace ReForm.Presentation.Pages.Account
@@ -68,6 +69,7 @@ namespace ReForm.Presentation.Pages.Account
                     var result = await userManager.CreateAsync(user, Input.Password);
                     if (result.Succeeded)
                     {
+                        await userManager.AddToRoleAsync(user, UserRolesEnum.User.ToString());
                         await signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToPage("/Account/Login");
                     }

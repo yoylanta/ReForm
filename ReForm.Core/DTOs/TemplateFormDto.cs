@@ -21,6 +21,8 @@ public class TemplateFormDto
 
     public bool IsPublic { get; set; }
 
+    public List<int> AllowedUserIds { get; set; } = new();
+
     public TemplateFormDto(TemplateForm templateForm)
     {
         Id = templateForm.Id;
@@ -31,6 +33,10 @@ public class TemplateFormDto
         ImageUrl = templateForm.ImageUrl;
         Tags = templateForm.Tags.Select(t => t.Name).ToList();
         IsPublic = templateForm.IsPublic;
+        AllowedUserIds = templateForm
+            .AllowedUsers
+            .Select(u => u.Id)
+            .ToList();
     }
 
     public TemplateFormDto() {}

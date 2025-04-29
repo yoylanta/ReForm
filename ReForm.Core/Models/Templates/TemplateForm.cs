@@ -28,4 +28,6 @@ public class TemplateForm
 
     public bool IsPublic { get; set; }
 
+    public ICollection<User> AllowedUsers { get; set; } = new List<User>();
+
 }

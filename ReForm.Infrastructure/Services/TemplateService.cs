@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
+using ReForm.Core.Models.Enums;
 using ReForm.Core.Models.Metadata;
 using ReForm.Core.Models.Templates;
+using ReForm.Core.Models.Identity;
 
 namespace ReForm.Infrastructure.Services;
 
@@ -11,7 +14,9 @@ public class TemplateService(
     IEntityRepository<TemplateQuestion> questionRepository,
     IEntityRepository<Topic> topicRepository,
     IEntityRepository<Tag> tagRepository,
-    ITagService tagService) : ITemplateService
+    IEntityRepository<User> userRepository,
+    ITagService tagService,
+    UserManager<User> userManager) : ITemplateService
 {
     public async Task<IEnumerable<TemplateForm>> GetByUserIdAsync(int userId)
     {
@@ -31,7 +36,6 @@ public class TemplateService(
 
         return templateForm;
     }
-
 
     public async Task AddQuestionAsync(TemplateQuestionDto questionDto)
     {
@@ -54,7 +58,8 @@ public class TemplateService(
         p => p.Id == id,
         p => p.Questions,
         p => p.Topic,
-        p => p.Tags
+        p => p.Tags,
+        p => p.AllowedUsers
         );
 
         return templateForm;
@@ -105,7 +110,8 @@ public class TemplateService(
     {
         var templateForm = await repository.FirstOrDefaultAsyncWithIncludes(
         t => t.Id == templateDto.Id,
-        t => t.Tags
+        t => t.Tags,
+        t => t.AllowedUsers
         );
         if (templateForm == null)
             return false;
@@ -116,6 +122,27 @@ public class TemplateService(
         templateForm.IsPublic = templateDto.IsPublic;
 
         Topic? topic = null;
+
+        var newIds = templateDto.AllowedUserIds
+            .Distinct()
+            .ToList();
+
+        var toRemove = templateForm
+            .AllowedUsers
+            .Where(u => !newIds.Contains(u.Id))
+            .ToList();
+        foreach (var u in toRemove)
+            templateForm.AllowedUsers.Remove(u);
+
+        foreach (var id in newIds)
+        {
+            if (templateForm.AllowedUsers.Any(u => u.Id == id))
+                continue;
+
+            var user = await userRepository.GetByIdAsync(id);
+            if (user != null)
+                templateForm.AllowedUsers.Add(user);
+        }
 
         if (!string.IsNullOrWhiteSpace(templateDto.TopicName))
         {
@@ -167,5 +194,18 @@ public class TemplateService(
     public async Task<IEnumerable<Topic>> GetAllTopicsAsync()
     {
         return await topicRepository.GetAllAsync();
+    }
+
+    public async Task<IEnumerable<TemplateForm>> GetAvailableForms(int userId)
+    {
+        var user = await userRepository.GetByIdAsync(userId);
+        var isAdmin = await userManager.IsInRoleAsync(user!, UserRolesEnum.Admin.ToString());
+
+        return isAdmin
+            ? await repository.AsQueryable().Include(f => f.AllowedUsers).ToListAsync()
+            : await repository.AsQueryable()
+                .Include(f => f.AllowedUsers)
+                .Where(f => f.UserId == userId || f.IsPublic || f.AllowedUsers.Any(au => au.Id == userId))
+                .ToListAsync();
     }
 }

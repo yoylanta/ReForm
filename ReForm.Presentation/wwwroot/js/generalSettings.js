@@ -1,142 +1,181 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
-    const checkbox = document.getElementById("IsPublic");
-    if (checkbox) {
-        checkbox.addEventListener("change", () => {
-            checkbox.closest('.form-group').style.backgroundColor = checkbox.checked ? "#e8f5e9" : "transparent";
-        });
-    }
-
-    const topicInput = document.getElementById("Topic");
-    const form = document.querySelector('form');
-
-    function debounce(fn, delay) {
-        let id;
+﻿document.addEventListener("DOMContentLoaded", async () => {
+    const formEl = document.querySelector("form");
+    const isPublicCb = document.getElementById("IsPublic");
+    const privateDiv = document.getElementById("private-settings");
+    const debounce = (fn, ms) => {
+        let tid;
         return (...args) => {
-            clearTimeout(id);
-            id = setTimeout(() => fn.apply(this, args), delay);
-        }
+            clearTimeout(tid);
+            tid = setTimeout(() => fn.apply(this, args), ms);
+        };
+    };
+
+    // ── 1) Public toggle show/hide private settings ──
+    privateDiv.style.display = isPublicCb.checked ? "none" : "block";
+    isPublicCb.addEventListener("change", () => {
+        privateDiv.style.display = isPublicCb.checked ? "none" : "block";
+        // optional: clear any selected users when switching to Public
+    });
+
+    // ── 2) Allowed‐Users Tagify ──
+    let allUsers = [];
+
+    await fetch(`/api/user/getAllUsers`)
+        .then(r => r.json())
+        .then(list => {
+            allUsers = list.map(u => ({
+                value: u.id,
+                name: u.name,
+                email: u.email,
+            }));
+        })
+        .catch(err => console.error("User initialization error:", err));
+
+    function suggestionItemTemplate(tagData) {
+        console.log('tagData', tagData);
+        return `
+        <div 
+            value="${tagData.value}" 
+            name="${tagData.name}" 
+            email="${tagData.email}" 
+            mappedvalue="${tagData.mappedValue}" 
+            class="tagify__dropdown__item tagifySuggestionItem" 
+            tabindex="0" 
+            role="option" 
+            aria-selected="true">
+            <strong>${tagData.name}</strong><br>
+            <small>${tagData.email}</small>
+        </div>
+    `;
     }
 
-    // 3) Init Tagify
-    const input = document.getElementById('tags-input');
-    const tagify = new Tagify(input, {
-        keepInvalidTags: true,       // <-- won't auto-remove unknown tags
-        enforceWhitelist: false,     // <-- allow new tags
-        whitelist: [],               // <-- we'll fill dynamically
+    const allowedInput = document.getElementById("allowed-users-input");
+    const allowedHidden = document.getElementById("AllowedUsersCsv");
+    const tagifyUsers = new Tagify(allowedInput, {
+            tagTextProp: 'name',
+            enforceWhitelist: true,
+            keepInvalidTags: false,
+            valueField: "value",
+            //skipInvalid: true,
+            dropdown: {
+                enabled: 1,
+                position: "text",
+                highlightFirst: true,
+                searchKeys: ['name', 'email']
+            },
+            whitelist: allUsers,
+            templates:
+                {
+                    dropdownItem: suggestionItemTemplate
+                }
+        })
+    ;
+
+    // preload existing allowed‐users
+    if (allowedHidden.value) {
+
+        const initialIds = allowedHidden.value.split(",").map(id => id.trim()).filter(id => id);
+        const initialUsers = allUsers.filter(u => initialIds.includes(String(u.value)));
+        tagifyUsers.addTags(initialUsers);
+    }
+
+    // ── 3) Tags Tagify ──
+    const tagInput = document.getElementById("tags-input");
+    const tagifyTags = new Tagify(tagInput, {
+        keepInvalidTags: true,
+        enforceWhitelist: false,
+        whitelist: [],
         dropdown: {
-            enabled: 1,                // show suggestions after 1 char
-            position: 'text',
+            enabled: 1,
+            position: "text",
             highlightFirst: true
         }
     });
 
-    // 4) As user types, fetch suggestions
-    tagify.on('input', debounce(e => {
-        const value = e.detail.value;
-        if (!value) return tagify.dropdown.hide();
-
-        fetch(`/api/template/tags?query=${encodeURIComponent(value)}`)
-            .then(res => res.json())
+    tagifyTags.on("input", debounce(e => {
+        const v = e.detail.value;
+        if (!v) {
+            tagifyTags.dropdown.hide();
+            return;
+        }
+        fetch(`/api/template/tags?query=${encodeURIComponent(v)}`)
+            .then(r => r.json())
             .then(list => {
-                tagify.settings.whitelist = list;
-                tagify.dropdown.show(value);
-            });
+                tagifyTags.settings.whitelist = list;
+                console.log('tagifyTags list', list);
+                tagifyTags.dropdown.show(v);
+            })
+            .catch(err => console.error("Tag search error:", err));
     }, 300));
 
-    topicInput.addEventListener('input', async () => {
-        const searchTerm = topicInput.value.trim();
-        const suggestionBox = document.getElementById("topic-suggestions");
-
-        if (searchTerm.length === 0) {
-            suggestionBox.innerHTML = '';
+    // ── 4) Topic autocomplete (unchanged) ──
+    const topicInput = document.getElementById("Topic");
+    const topicBox = document.getElementById("topic-suggestions");
+    topicInput.addEventListener("input", async () => {
+        const term = topicInput.value.trim();
+        if (!term) {
+            topicBox.innerHTML = "";
             return;
         }
-
         try {
-            const response = await fetch(`/api/template/topic/get-all?searchTerm=${encodeURIComponent(searchTerm)}`);
-            let topics = await response.json();
-
-            topics.sort((a, b) => a.name.localeCompare(b.name));
-
-            topics = topics.filter(topic => topic.name.toLowerCase().includes(searchTerm.toLowerCase()));
-
-            suggestionBox.innerHTML = '';
-
-            topics.forEach(topic => {
-                const suggestionItem = document.createElement("li");
-                suggestionItem.textContent = topic.name;
-                suggestionItem.classList.add('suggestion-item');
-                suggestionItem.addEventListener('click', () => {
-                    topicInput.value = topic.name;
-                    suggestionBox.innerHTML = '';
+            const res = await fetch(
+                `/api/template/topic/get-all?searchTerm=${encodeURIComponent(term)}`
+            );
+            let topics = await res.json();
+            topics = topics
+                .filter(t => t.name.toLowerCase().includes(term.toLowerCase()))
+                .sort((a, b) => a.name.localeCompare(b.name));
+            topicBox.innerHTML = "";
+            topics.forEach(t => {
+                const li = document.createElement("li");
+                li.textContent = t.name;
+                li.classList.add("suggestion-item");
+                li.addEventListener("click", () => {
+                    topicInput.value = t.name;
+                    topicBox.innerHTML = "";
                 });
-                suggestionBox.appendChild(suggestionItem);
+                topicBox.appendChild(li);
             });
-        } catch (error) {
-            console.error("Error fetching suggestions:", error);
+        } catch (err) {
+            console.error("Topic search error:", err);
         }
     });
 
-    form.addEventListener('submit', async (event) => {
+    // ── 5) Form submit ──
+    formEl.addEventListener("submit", async event => {
         event.preventDefault();
 
-        const topicName = document.getElementById("Topic").value.trim();
-        if (!topicName) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Missing Topic',
-                text: 'Topic name cannot be empty.'
-            });
-            return;
-        }
-
-        const tags = tagify.value.map(item => item.value);
+        // gather all fields
+        const payload = {
+            Id: +document.getElementById("TemplateId").value,
+            Title: document.getElementById("Title").value,
+            Description: document.getElementById("Description").value,
+            TopicName: document.getElementById("Topic").value.trim(),
+            IsPublic: isPublicCb.checked,
+            ImageUrl: document.getElementById("ImageUrl").value,
+            Tags: tagifyTags.value.map(t => t.value),
+            AllowedUserIds: tagifyUsers.value.map(u => +u.value)
+        };
 
         try {
-            const formData = {
-                Id: document.getElementById("TemplateId").value,
-                Title: document.getElementById("Title").value,
-                Description: document.getElementById("Description").value,
-                TopicName: topicName,
-                IsPublic: document.getElementById("IsPublic").checked,
-                ImageUrl: document.getElementById("ImageUrl").value,
-                Tags: tags
-            };
-
-            const postResponse = await fetch('/api/template/edit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
+            const res = await fetch("/api/template/edit", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(payload)
             });
-
-            const data = await postResponse.json();
-            if (postResponse.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Template updated successfully.'
-                });
+            const data = await res.json();
+            if (res.ok) {
+                Swal.fire("Success", "Template updated successfully.", "success");
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: data.message || "Unable to update template."
-                });
+                Swal.fire("Error", data.message || "Unable to update template.", "error");
             }
-        } catch (error) {
-            console.error("Error:", error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'There was an error updating the template.'
-            });
+        } catch (err) {
+            console.error("Submit error:", err);
+            Swal.fire("Error", "Network error while updating.", "error");
         }
     });
 
-    form.setAttribute("autocomplete", "off");
-    document.querySelectorAll("input").forEach(input => {
-        input.setAttribute("autocomplete", "off");
-    });
+    // disable browser autocomplete
+    formEl.setAttribute("autocomplete", "off");
+    formEl.querySelectorAll("input").forEach(i => i.setAttribute("autocomplete", "off"));
 });

@@ -1,25 +1,23 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Identity;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
-using ReForm.Core.Models.Templates;
+using ReForm.Core.Models.Identity;
 
 namespace ReForm.Presentation.Pages.TemplateSetup;
 
-public class SubmissionsModel(ITemplateService templateService, IFilledFormService filledFormService,
-    IUserService userService) : PageModel
+public class SubmissionsModel(
+    ITemplateService templateService,
+    IFilledFormService filledFormService,
+    IUserService userService,
+    UserManager<User> userManager) : TemplateSetupPageModelBase(templateService, userManager)
 {
-    public TemplateForm Template { get; set; } = null!;
     public List<FilledFormDto> Submissions { get; set; } = new();
     public Dictionary<int, UserDto> UsersById { get; set; } = new();
 
     public async Task OnGetAsync(int id)
     {
-        Template = await templateService.GetTemplateFormWithQuestionsAsync(id)
-                   ?? throw new InvalidOperationException("Template not found.");
-
+        await InitializeAsync(id);
         Submissions = (await filledFormService.GetFilledFormsByTemplateIdAsync(id)).ToList();
-
         var userIds = Submissions.Select(f => f.UserId).Distinct();
         foreach (var userId in userIds)
         {

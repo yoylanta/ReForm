@@ -46,6 +46,17 @@
             <small class="form-text text-muted">Check if the template should be accessible to everyone.</small>
         </div>
 
+        <div class="form-group" id="private-settings"
+             style="display:@(Model.Template.IsPublic ? "none" : "block")">
+            <label for="allowed-users-input">Allowed Users</label>
+            <input id="allowed-users-input" placeholder="Search users…"/>
+            <input type="hidden"
+                   id="AllowedUsersCsv"
+                   name="AllowedUsersCsv"
+                   value="@Model.AllowedUsersCsv"/>
+        </div>
+
+
         <div class="form-group">
             <label for="ImageUrl">Image URL</label>
             <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" value="@Model.Template.ImageUrl"/>

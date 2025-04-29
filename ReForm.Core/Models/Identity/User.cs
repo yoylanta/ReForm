@@ -14,5 +14,8 @@ namespace ReForm.Core.Models.Identity
         public ICollection<TemplateForm> CreatedTemplates { get; set; } = [];
         public ICollection<FilledForm> FilledForms { get; set; } = [];
         public ICollection<Answer> Answers { get; set; } = [];
+
+        public ICollection<TemplateForm> AllowedForms { get; set; }
+            = new List<TemplateForm>();
     }
 }
