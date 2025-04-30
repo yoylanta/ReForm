@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordInput = document.querySelector('input[type="password"]');
     const showPasswordIcon = document.querySelector('.fa-lock');
 
-    // Toggle password visibility
     showPasswordIcon.addEventListener("click", () => {
         if (passwordInput.type === "password") {
             passwordInput.type = "text";

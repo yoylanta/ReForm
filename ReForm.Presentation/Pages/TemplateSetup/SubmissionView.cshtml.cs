@@ -1,10 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
-using ReForm.Core.Models.Templates;
 
 namespace ReForm.Presentation.Pages.TemplateSetup
 {

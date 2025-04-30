@@ -1,5 +1,4 @@
 ﻿using ReForm.Core.Models.Submissions;
-using ReForm.Core.Models.Templates;
 
 namespace ReForm.Core.DTOs;
 
@@ -17,7 +16,7 @@ public class FilledFormDto
 
     public List<FilledQuestionDto> Questions { get; set; } = new List<FilledQuestionDto>();
 
-    public FilledFormDto() { }
+    public FilledFormDto() {}
 
     public FilledFormDto(FilledForm filledForm)
     {
@@ -27,7 +26,7 @@ public class FilledFormDto
         SubmittedAt = filledForm.SubmittedAt;
         Questions = filledForm.Questions
             .Select(filledQuestion => new FilledQuestionDto(filledQuestion))
-        .ToList();
-         UserId = filledForm.UserId;
+            .ToList();
+        UserId = filledForm.UserId;
     }
 }

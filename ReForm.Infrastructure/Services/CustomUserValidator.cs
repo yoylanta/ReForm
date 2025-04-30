@@ -7,6 +7,6 @@ public class CustomUserValidator : IUserValidator<User>
 {
     public Task<IdentityResult> ValidateAsync(UserManager<User> manager, User user)
     {
-        return Task.FromResult(IdentityResult.Success);  // No validation errors
+        return Task.FromResult(IdentityResult.Success);
     }
 }

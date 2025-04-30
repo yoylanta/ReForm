@@ -1,6 +1,5 @@
 ﻿using ReForm.Core.Models.Enums;
 using ReForm.Core.Models.Submissions;
-using ReForm.Core.Models.Templates;
 
 namespace ReForm.Core.DTOs;
 public class FilledQuestionDto

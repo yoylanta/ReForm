@@ -9,6 +9,8 @@
 <script src="~/lib/tagify/dist/js/tagify.js" defer></script>
 <link rel="stylesheet" href="~/css/generalSettings.css"/>
 <script src="~/js/generalSettings.js" defer></script>
+<link rel="stylesheet" href="~/lib/easymde/dist/css/easymde.min.css"/>
+<script src="~/lib/easymde/dist/js/easymde.min.js" defer></script>
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4 mt-5">
@@ -23,7 +25,8 @@
 
         <div class="form-group">
             <label for="Description">Description</label>
-            <textarea class="form-control" id="Description" name="Description">@Model.Template.Description</textarea>
+            <textarea class="form-control" id="markdown-description"
+                      name="Description">@Model.Template.Description</textarea>
         </div>
 
         <div class="form-group">

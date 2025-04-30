@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReForm.Core.DTOs;
+﻿using ReForm.Core.DTOs;
 
 namespace ReForm.Core.Interfaces;
 
-    public interface IFilledFormService
-    {
+public interface IFilledFormService
+{
     Task SaveFilledFormAsync(FilledFormDto filledFormDto);
 
     Task<IEnumerable<FilledFormDto>> GetFilledFormsByTemplateIdAsync(int templateFormId);
@@ -17,4 +12,3 @@ namespace ReForm.Core.Interfaces;
 
     Task DeleteFilledFormAsync(int filledFormId);
 }
-

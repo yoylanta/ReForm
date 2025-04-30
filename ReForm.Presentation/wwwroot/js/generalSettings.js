@@ -149,7 +149,7 @@
         const payload = {
             Id: +document.getElementById("TemplateId").value,
             Title: document.getElementById("Title").value,
-            Description: document.getElementById("Description").value,
+            Description: descriptionArea.value(),
             TopicName: document.getElementById("Topic").value.trim(),
             IsPublic: isPublicCb.checked,
             ImageUrl: document.getElementById("ImageUrl").value,
@@ -178,4 +178,17 @@
     // disable browser autocomplete
     formEl.setAttribute("autocomplete", "off");
     formEl.querySelectorAll("input").forEach(i => i.setAttribute("autocomplete", "off"));
+
+    // ── 6) Initialize EasyMDE for Markdown editor ──
+    const descriptionArea = new EasyMDE({
+        element: document.getElementById("markdown-description"),
+        spellChecker: false,
+        autosave: {
+            enabled: true,
+            uniqueId: "markdown-description",
+            delay: 1000
+        },
+        initialValue: document.getElementById("markdown-description").value,
+        toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "preview", "guide"]
+    });
 });

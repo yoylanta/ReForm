@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Templates;
@@ -77,7 +76,7 @@ namespace ReForm.Infrastructure.Services
             var formsWithIncludes = forms.AsQueryable()
                 .Include(f => f.Questions)
                 .ThenInclude(q => q.Answers)
-                        .Include(f => f.User);
+                .Include(f => f.User);
 
             return formsWithIncludes.Select(f => new FilledFormDto(f)).ToList();
         }

@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const confirmPasswordInput = document.querySelector('input[name="Input.ConfirmPassword"]');
     const showPasswordIcon = document.querySelectorAll('.fa-eye-slash');
 
-    // Toggle password visibility
     showPasswordIcon.forEach(icon => {
         icon.addEventListener("click", () => {
             const passwordInput = icon.parentElement.previousElementSibling;
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Form validation
     const form = document.getElementById("registerForm");
     form.addEventListener("submit", (event) => {
         const password = document.querySelector('input[name="Input.Password"]').value;

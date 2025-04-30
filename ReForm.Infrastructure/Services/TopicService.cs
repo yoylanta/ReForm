@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ReForm.Core.DTOs;
+﻿using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Metadata;
 using ReForm.Core.Models.Templates;
 
 namespace ReForm.Infrastructure.Services;
 
-public class TopicService(IEntityRepository<TemplateForm> repository, IEntityRepository<TemplateQuestion> questionRepository,
-     IEntityRepository<Topic> topicRepository) : ITopicService
+public class TopicService(
+    IEntityRepository<TemplateForm> repository,
+    IEntityRepository<TemplateQuestion> questionRepository,
+    IEntityRepository<Topic> topicRepository) : ITopicService
 {
     public async Task<IEnumerable<TopicDto>> GetAllTopicsAsync()
     {
@@ -47,4 +44,3 @@ public class TopicService(IEntityRepository<TemplateForm> repository, IEntityRep
         return topic == null ? null : new TopicDto(topic);
     }
 }
-

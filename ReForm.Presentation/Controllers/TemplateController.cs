@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using ReForm.Core.DTOs;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
-using ReForm.Core.Models.Metadata;
-using ReForm.Infrastructure.Services;
 
 namespace ReForm.Presentation.Controllers;
 
@@ -47,8 +45,6 @@ public class TemplatesController(
 
         try
         {
-            var userId = int.Parse(userManager.GetUserId(User!));
-
             var result = await templateService.UpdateTemplateFormAsync(dto);
 
             if (result)
@@ -187,18 +183,11 @@ public class TemplatesController(
     {
         if (string.IsNullOrWhiteSpace(query))
         {
-            // no query → return all tag names
             var all = await tagService.GetAllTagsAsync();
             return Ok(all.Select(t => t.Name));
         }
 
-        // prefix‐search via your service
         var matches = await tagService.SearchTagsAsync(query);
-
-        // if you really want StartsWith rather than Contains, uncomment:
-        // matches = matches
-        //     .Where(t => t.Name.StartsWith(query, StringComparison.OrdinalIgnoreCase))
-        //     .ToList();
 
         return Ok(matches.Select(t => t.Name));
     }

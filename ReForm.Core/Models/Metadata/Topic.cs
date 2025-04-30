@@ -1,6 +1,4 @@
-﻿using ReForm.Core.Models.Templates;
-
-namespace ReForm.Core.Models.Metadata;
+﻿namespace ReForm.Core.Models.Metadata;
 
 public class Topic
 {

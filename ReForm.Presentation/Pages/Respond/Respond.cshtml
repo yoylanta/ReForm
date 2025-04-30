@@ -31,23 +31,23 @@
                     <p><strong>Topic:</strong> @Model.Template.Topic!.Name</p>
                 }
 
-                <p><strong>Tags:</strong>
-                    @if (Model.Template.Tags?.Any() == true)
-                    {
-                        @foreach (var tag in Model.Template.Tags.Select((t, i) => new { t.Name, Index = i }))
+                @if (Model.Template.Tags?.Any() == true)
+                {
+                    <p><strong>Tags:</strong>
+                        @foreach (var tag in Model.Template.Tags)
                         {
                             <span class="badge bg-secondary me-1">@tag.Name</span>
                         }
-                    }
-                    else
-                    {
-                        <span class="text-muted">No tags</span>
-                    }
-                </p>
+                    </p>
+                }
 
-                @if (!string.IsNullOrWhiteSpace(Model.Template.Description))
+                @if (!string.IsNullOrWhiteSpace(Model.FormattedDescription))
                 {
-                    <p><strong>Description:</strong> @Model.Template.Description</p>
+                    <div class="card mt-3 p-3">
+                        <div class="card-body">
+                            @Html.Raw(Model.FormattedDescription)
+                        </div>
+                    </div>
                 }
 
                 @if (!string.IsNullOrWhiteSpace(Model.Template.ImageUrl))
