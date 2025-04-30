@@ -2,7 +2,10 @@ let editMode = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     MicroModal.init();
-    document.getElementById('template-title').setAttribute('autocomplete', 'off');
+    const titleInput = document.getElementById('template-title');
+    if (titleInput) {
+        titleInput.setAttribute('autocomplete', 'off');
+    }
     document.querySelectorAll(".template-card").forEach(card => {
         card.addEventListener("click", (e) => {
             if (editMode) return;
@@ -13,46 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
-
-function createNewTemplate() {
-    MicroModal.show('create-template-modal');
-}
-
-async function saveTemplate() {
-    const title = document.getElementById('template-title').value;
-
-    if (!title.trim()) {
-        Swal.fire('Oops!', 'Title cannot be empty', 'warning');
-        return;
-    }
-
-    try {
-        const response = await fetch('/api/template/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({title})
-        });
-
-        if (response.ok) {
-            const newTemplate = await response.json();
-            window.location.href = `/TemplateSetup/GeneralSettings?id=${newTemplate.id}`;
-        } else {
-            const error = await response.text();
-            Swal.fire('Error', "Failed to save template: " + error, 'error');
-        }
-    } catch (err) {
-        console.error(err);
-        Swal.fire('Failed to save template', err.message || 'Unknown error', 'error');
-    }
-}
-
-function redirectToEditPage(templateId) {
-    window.location.href = `/TemplateSetup/Edit?id=${templateId}`;
-}
-
-let deleteMode = false;
 
 function toggleEditMode() {
     editMode = !editMode;
@@ -76,24 +39,28 @@ function toggleEditMode() {
 }
 
 async function deleteSelectedTemplates() {
-    const selectedIds = Array.from(document.querySelectorAll(".template-checkbox:checked"))
-        .map(cb => cb.closest(".template-card").dataset.templateId);
+    const selectedCheckboxes = document.querySelectorAll(".template-checkbox:checked");
+    const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.closest(".template-card").dataset.templateId);
 
     if (selectedIds.length === 0) {
-        Swal.fire('Notice', 'No templates selected.', 'info');
+        Swal.fire({
+            icon: 'info',
+            title: 'Notice',
+            text: 'No templates selected.'
+        });
         return;
     }
 
-    const confirmed = await Swal.fire({
+    const confirmation = await Swal.fire({
         icon: 'warning',
         title: 'Are you sure?',
-        text: `Are you sure you want to delete ${selectedIds.length} template(s)?`,
+        text: `Are you sure you want to delete ${selectedIds.length} forms?`,
         showCancelButton: true,
         confirmButtonText: 'Yes, delete it!',
         cancelButtonText: 'No, cancel!',
     });
 
-    if (!confirmed.isConfirmed) return;
+    if (!confirmation.isConfirmed) return;
 
     try {
         const response = await fetch('/api/template/delete', {
@@ -106,17 +73,24 @@ async function deleteSelectedTemplates() {
             Swal.fire({
                 icon: 'success',
                 title: 'Deleted!',
-                text: 'Selected templates have been deleted.',
+                text: 'Successfully deleted template forms!',
                 timer: 3000,
                 timerProgressBar: true
             }).then(() => location.reload());
         } else {
-            const error = await response.text();
-            Swal.fire('Error', "Failed to delete templates: " + error, 'error');
+            const errorText = await response.text();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `Failed to delete templates: ${errorText}`
+            });
         }
     } catch (err) {
         console.error(err);
-        Swal.fire('Error', 'Error occurred while deleting templates.', 'error');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while deleting templates.'
+        });
     }
-
 }

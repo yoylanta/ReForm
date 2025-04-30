@@ -14,7 +14,7 @@ public interface ITemplateService
 
     Task AddQuestionAsync(TemplateQuestionDto question);
 
-    Task DeleteTemplatesAsync(List<int> templateIds, int userId);
+    Task DeleteTemplatesAsync(List<int> templateIds);
 
     Task<TemplateQuestionDto?> GetQuestionAsync(int questionId);
 
@@ -29,4 +29,7 @@ public interface ITemplateService
     Task<IEnumerable<Topic>> GetAllTopicsAsync();
 
     Task<IEnumerable<TemplateForm>> GetAvailableForms(int userId);
+
+    Task<IEnumerable<TemplateForm>> GetAllTemplateFormsAsync();
+
 }

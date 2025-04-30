@@ -65,12 +65,10 @@ public class TemplateService(
         return templateForm;
     }
 
-    public async Task DeleteTemplatesAsync(List<int> templateIds, int userId)
+    public async Task DeleteTemplatesAsync(List<int> templateIds)
     {
-        var templates = await repository.FindAsync(t => templateIds.Contains(t.Id) && t.UserId == userId);
-
+        var templates = await repository.FindAsync(t => templateIds.Contains(t.Id));
         repository.RemoveRange(templates);
-
         await repository.SaveChangesAsync();
     }
 
@@ -207,5 +205,14 @@ public class TemplateService(
                 .Include(f => f.AllowedUsers)
                 .Where(f => f.UserId == userId || f.IsPublic || f.AllowedUsers.Any(au => au.Id == userId))
                 .ToListAsync();
+    }
+
+    public async Task<IEnumerable<TemplateForm>> GetAllTemplateFormsAsync()
+    {
+        return await repository.AsQueryable()
+            .Include(f => f.AllowedUsers)
+            .Include(f => f.Tags)
+            .Include(f => f.Topic)
+            .ToListAsync();
     }
 }

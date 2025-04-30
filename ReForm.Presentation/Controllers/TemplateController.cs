@@ -78,10 +78,9 @@ public class TemplatesController(
     [IgnoreAntiforgeryToken]
     public async Task<IActionResult> DeleteMultipleTemplates([FromBody] List<int> templateIds)
     {
-        var userId = int.Parse(userManager.GetUserId(User!));
         try
         {
-            await templateService.DeleteTemplatesAsync(templateIds, userId);
+            await templateService.DeleteTemplatesAsync(templateIds);
             return Ok();
         }
         catch (Exception ex)

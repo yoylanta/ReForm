@@ -1,8 +1,12 @@
 ﻿@page
 @model IndexModel
+
 @{
+    Layout = "_Layout";
     ViewData["Title"] = "User Management";
+    ViewData["ActiveTab"] = "Users";
 }
+
 
 <head>
     <title>User Management</title>
@@ -15,7 +19,6 @@
 <div class="container mt-4">
     <h2 class="mb-4">User Management</h2>
 
-    <!-- Toolbar -->
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="toolbar">
             <button type="button" class="btn btn-outline-primary me-2" id="blockUsers">
@@ -36,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Table -->
     <table class="table table-striped">
         <thead>
         <tr>

@@ -1,0 +1,48 @@
+@page
+@model ReForm.Presentation.Pages.Admin.Templates.Index
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Admin Templates";
+    ViewData["ActiveTab"] = "Templates";
+}
+<link rel="stylesheet" href="~/css/homepage.css"/>
+<script src="~/lib/micromodal/dist/micromodal.min.js"></script>
+<script src="~/js/admin-templates.js" defer></script>
+
+<div class="template-container">
+    <div class="header">
+        <h1>All Templates (Admin)</h1>
+        <div>
+            <button id="edit-mode-toggle" class="btn btn-outline-secondary me-2" onclick="toggleEditMode()">Edit
+            </button>
+            <button id="delete-selected" class="btn btn-danger me-2" style="display: none;"
+                    onclick="deleteSelectedTemplates()">Delete Selected
+            </button>
+        </div>
+    </div>
+
+    <div class="template-grid">
+        @foreach (var form in Model.AdminTemplates)
+        {
+            <div class="template-card" data-template-id="@form.Id">
+                <div class="checkbox-container">
+                    <input type="checkbox" class="template-checkbox" style="display: none;"/>
+                </div>
+                <h3>@form.Title</h3>
+                <div class="template-meta">
+                    <p><strong>ID:</strong> @form.Id</p>
+                    <p><strong>Public:</strong> @form.IsPublic)</p>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id="delete-confirmation-modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h2>Are you sure you want to delete the selected templates?</h2>
+            <button class="btn btn-danger" onclick="deleteSelectedTemplates()">Yes, Delete</button>
+            <button class="btn btn-secondary" onclick="cancelDelete()">Cancel</button>
+        </div>
+    </div>
+</div>
