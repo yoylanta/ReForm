@@ -6,12 +6,13 @@ using ReForm.Core.Models.Submissions;
 using ReForm.Infrastructure.Repositories;
 using ReForm.Infrastructure.Services;
 using ReForm.Core.Models.Metadata;
+using ReForm.Core.Options;
 
 namespace ReForm.Presentation.Module;
 
 public static class ServiceRegistration
 {
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static void AddApplicationServices(this IServiceCollection services,  IConfiguration configuration)
     {
         services.AddScoped<IEntityRepository<User>, EntityRepository<User>>();
         services.AddScoped<IUserService, UserService>();
@@ -27,5 +28,7 @@ public static class ServiceRegistration
         services.AddScoped<IEntityRepository<Topic>, EntityRepository<Topic>>();
         services.AddScoped<ITopicService, TopicService>();
         services.AddScoped<ITagService, TagService>();
+        services.AddHttpClient<ISalesforceService, SalesforceService>();
+        services.Configure<SalesforceOptions>(configuration.GetSection("Salesforce"));
     }
 }

@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
+using ReForm.Core.DTOs;
 
 namespace ReForm.Presentation.Controllers;
 
 [Authorize]
 [Route("api/user")]
-public class UserController(UserManager<User> userManager, IUserService userService) : Controller
+public class UserController(UserManager<User> userManager, IUserService userService, ISalesforceService salesforceService) : Controller
 {
     [HttpGet]
     [IgnoreAntiforgeryToken]
@@ -103,4 +104,39 @@ public class UserController(UserManager<User> userManager, IUserService userServ
         var users = await userService.GetAllUsersAsync();
         return Ok(users);
     }
+
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetProfile()
+    {
+        var currentUser = await userManager.GetUserAsync(User);
+        if (currentUser == null || currentUser.IsBlocked)
+            return Unauthorized();
+
+        return Ok(new
+        {
+            currentUser.Id,
+            currentUser.UserName,
+            currentUser.Email,
+            currentUser.IsBlocked
+        });
+    }
+
+    [HttpPost("create-salesforce-account")]
+    public async Task<IActionResult> CreateSalesforceAccount([FromBody] SalesforceDto dto)
+    {
+        var currentUser = await userManager.GetUserAsync(User);
+        if (currentUser == null || currentUser.IsBlocked)
+            return Unauthorized();
+
+        try
+        {
+            await salesforceService.CreateAccountAndContactAsync(dto);
+            return Ok("Created in Salesforce");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Salesforce error: {ex.Message}");
+        }
+    }
+
 }

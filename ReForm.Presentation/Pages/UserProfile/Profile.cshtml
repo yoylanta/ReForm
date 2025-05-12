@@ -1,0 +1,46 @@
+﻿@page
+@model ReForm.Presentation.Pages.UserProfile.ProfileModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "User Profile";
+    ViewData["ActiveTab"] = "Profile";
+}
+
+<head>
+    <title>User Profile</title>
+    <link href="@Url.Content("~/css/user-profile.css")" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h2 class="mb-4">Your Profile</h2>
+
+        <div class="card p-4 shadow-sm">
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Name:</strong></div>
+                <div class="col-sm-9">@Model.CurrentUser.Name</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Email:</strong></div>
+                <div class="col-sm-9">@Model.CurrentUser.Email</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Role:</strong></div>
+                <div class="col-sm-9">@((Model.CurrentUser?.IsAdmin ?? false) ? "Admin" : "User")</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Last Login:</strong></div>
+                <div class="col-sm-9">@Model.CurrentUser.LastLogin?.ToString("yyyy-MM-dd HH:mm:ss") ?? "Never"</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"><strong>Status:</strong></div>
+                <div class="col-sm-9">
+                    <span class="badge @(Model.CurrentUser.IsBlocked ? "bg-danger" : "bg-success")">
+                        @(Model.CurrentUser.IsBlocked ? "Blocked" : "Active")
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
