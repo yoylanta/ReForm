@@ -57,7 +57,11 @@
                 </ul>
             </div>
             <div class="text-center">
-                <h3 class="display-7">Welcome, @user?.Name</h3>
+                <a asp-area=""
+                    asp-page="/UserProfile/Profile"
+                    class="text-decoration-none text-dark">
+                    <h3 class="display-7 mb-0">Welcome, @user?.Name</h3>
+                </a>
             </div>
         </div>
     </nav>

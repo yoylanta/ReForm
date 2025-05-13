@@ -122,15 +122,21 @@ public class UserController(UserManager<User> userManager, IUserService userServ
     }
 
     [HttpPost("create-salesforce-account")]
-    public async Task<IActionResult> CreateSalesforceAccount([FromBody] SalesforceDto dto)
+    public async Task<IActionResult> CreateSalesforceAccount([FromBody] SalesforceDto dto, [FromQuery] string authorizationCode)
     {
         var currentUser = await userManager.GetUserAsync(User);
         if (currentUser == null || currentUser.IsBlocked)
             return Unauthorized();
 
+        if (string.IsNullOrEmpty(authorizationCode))
+        {
+            return BadRequest("Authorization code is required.");
+        }
+
         try
         {
-            await salesforceService.CreateAccountAndContactAsync(dto);
+            // Pass the SalesforceDto and AuthorizationCode to the service method
+            await salesforceService.CreateAccountAndContactAsync(dto, authorizationCode);
             return Ok("Created in Salesforce");
         }
         catch (Exception ex)
@@ -138,5 +144,4 @@ public class UserController(UserManager<User> userManager, IUserService userServ
             return StatusCode(500, $"Salesforce error: {ex.Message}");
         }
     }
-
 }
