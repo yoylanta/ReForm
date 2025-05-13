@@ -1,0 +1,123 @@
+﻿@page
+@model ReForm.Presentation.Pages.UserProfile.ProfileModel
+
+@using Microsoft.AspNetCore.Identity
+@using ReForm.Core.Models.Identity
+@inject UserManager<User> UserManager
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "User Profile";
+    ViewData["ActiveTab"] = "Profile";
+
+    var currentUserIdString = Model.CurrentUser?.Id.ToString();
+    var isOwner = currentUserIdString == UserManager.GetUserId(User);
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Profile</h2>
+
+    <div class="card p-4 shadow-sm">
+        @if (Model.CurrentUser != null)
+        {
+            <!-- user info -->
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Name:</strong></div>
+                <div class="col-sm-9">@Model.CurrentUser.Name</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Email:</strong></div>
+                <div class="col-sm-9">@Model.CurrentUser.Email</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Role:</strong></div>
+                <div class="col-sm-9">
+                    @((Model.CurrentUser?.IsAdmin ?? false) ? "Admin" : "User")
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Last Login:</strong></div>
+                <div class="col-sm-9">
+                    @(Model.CurrentUser.LastLogin.HasValue
+                        ? Model.CurrentUser.LastLogin.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                        : "Never")
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-sm-3"><strong>Status:</strong></div>
+                <div class="col-sm-9">
+                    <span class="badge @(Model.CurrentUser.IsBlocked ? "bg-danger" : "bg-success")">
+                        @(Model.CurrentUser.IsBlocked ? "Blocked" : "Active")
+                    </span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-danger">User information could not be loaded.</div>
+        }
+
+        @* Salesforce Button *@
+        @if (isOwner || isAdmin)
+        {
+            <div class="mt-4">
+                <button class="btn btn-primary"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#sfForm"
+                        aria-expanded="false"
+                        aria-controls="sfForm">
+                    Create Salesforce Account
+                </button>
+            </div>
+        }
+    </div>
+
+    @* Success message *@
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success mt-3">
+            @TempData["Success"]
+        </div>
+    }
+
+    @* Collapsible form *@
+    <div class="collapse mt-3" id="sfForm">
+        <div class="card card-body">
+            <form method="post">
+                <input hidden asp-for="AuthorizationCode" />
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label asp-for="SalesforceDto.LegalName" class="form-label">Legal Name</label>
+                    <input asp-for="SalesforceDto.LegalName" class="form-control" />
+                    <span asp-validation-for="SalesforceDto.LegalName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SalesforceDto.Email" class="form-label">Email</label>
+                    <input asp-for="SalesforceDto.Email" class="form-control" />
+                    <span asp-validation-for="SalesforceDto.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SalesforceDto.Phone" class="form-label">Phone</label>
+                    <input asp-for="SalesforceDto.Phone" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SalesforceDto.Description" class="form-label">Description</label>
+                    <textarea asp-for="SalesforceDto.Description" class="form-control"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit to Salesforce</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/user-profile.js"></script>
+}

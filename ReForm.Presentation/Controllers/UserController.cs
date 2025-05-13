@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
+using ReForm.Core.DTOs;
 
 namespace ReForm.Presentation.Controllers;
 
 [Authorize]
 [Route("api/user")]
-public class UserController(UserManager<User> userManager, IUserService userService) : Controller
+public class UserController(UserManager<User> userManager, IUserService userService, ISalesforceService salesforceService) : Controller
 {
     [HttpGet]
     [IgnoreAntiforgeryToken]
@@ -102,5 +103,45 @@ public class UserController(UserManager<User> userManager, IUserService userServ
     {
         var users = await userService.GetAllUsersAsync();
         return Ok(users);
+    }
+
+    [HttpGet("profile")]
+    public async Task<IActionResult> GetProfile()
+    {
+        var currentUser = await userManager.GetUserAsync(User);
+        if (currentUser == null || currentUser.IsBlocked)
+            return Unauthorized();
+
+        return Ok(new
+        {
+            currentUser.Id,
+            currentUser.UserName,
+            currentUser.Email,
+            currentUser.IsBlocked
+        });
+    }
+
+    [HttpPost("create-salesforce-account")]
+    public async Task<IActionResult> CreateSalesforceAccount([FromBody] SalesforceDto dto, [FromQuery] string authorizationCode)
+    {
+        var currentUser = await userManager.GetUserAsync(User);
+        if (currentUser == null || currentUser.IsBlocked)
+            return Unauthorized();
+
+        if (string.IsNullOrEmpty(authorizationCode))
+        {
+            return BadRequest("Authorization code is required.");
+        }
+
+        try
+        {
+            // Pass the SalesforceDto and AuthorizationCode to the service method
+            await salesforceService.CreateAccountAndContactAsync(dto, authorizationCode);
+            return Ok("Created in Salesforce");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Salesforce error: {ex.Message}");
+        }
     }
 }

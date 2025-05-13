@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ReForm.Core.Interfaces;
 using ReForm.Core.Models.Identity;
-using ReForm.Core.Models.Templates;
 using ReForm.Presentation.Module;
 using ReForm.Infrastructure;
-using ReForm.Infrastructure.Repositories;
-using ReForm.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Host.ConfigureSerilog(builder.Configuration);
 builder.Services.AddRazorPages();
 
@@ -26,7 +23,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 
-builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
         options.Password.RequireDigit = false;
@@ -40,7 +37,6 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-
 
 var app = builder.Build();
 
